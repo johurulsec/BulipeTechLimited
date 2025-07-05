@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect><x>0</x><y>0</y><width>1600</width><height>900</height></rect>
+  </property>
+  <property name="windowTitle"><string>Bulipe Tech Limited Web Browser</string></property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QLineEdit" name="urlLineEdit">
+    <property name="geometry"><rect><x>250</x><y>30</y><width>1100</width><height>26</height></rect></property>
+   </widget>
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry"><rect><x>1360</x><y>30</y><width>100</width><height>26</height></rect></property>
+    <property name="text"><string>Search</string></property>
+   </widget>
+   <widget class="QPushButton" name="backButton">
+    <property name="geometry"><rect><x>10</x><y>30</y><width>50</width><height>26</height></rect></property>
+   </widget>
+   <widget class="QPushButton" name="forwardButton">
+    <property name="geometry"><rect><x>70</x><y>30</y><width>50</width><height>26</height></rect></property>
+   </widget>
+   <widget class="QPushButton" name="reloadButton">
+    <property name="geometry"><rect><x>130</x><y>30</y><width>50</width><height>26</height></rect></property>
+   </widget>
+   <widget class="QWidget" name="verticalLayoutWidget">
+    <property name="geometry"><rect><x>10</x><y>80</y><width>1580</width><height>800</height></rect></property>
+    <layout class="QVBoxLayout" name="verticalLayout"/>
+   </widget>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
