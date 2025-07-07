@@ -6,6 +6,8 @@
 #include <QWebEngineView>
 #include <QLineEdit>
 #include <QPushButton>
+#include<QWebEngineProfile>
+#include<QWebEnginePage>
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -35,6 +37,8 @@ private:
     QPushButton *forwardButton;
     QPushButton *reloadButton;
     QPushButton *searchButton;
+
+    QWebEngineProfile *profile;
 };
 
 #endif // MAINWINDOW_H

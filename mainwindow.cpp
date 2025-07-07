@@ -7,6 +7,8 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent) {
 
+    qDebug()<<"MW constructor";
+
     QWidget *central = new QWidget(this);
     QVBoxLayout *mainLayout = new QVBoxLayout(central);
     mainLayout->setContentsMargins(5, 5, 5, 5);
@@ -33,11 +35,18 @@ MainWindow::MainWindow(QWidget *parent)
     // Finalize
     setCentralWidget(central);
     addNewTab(); // Start with 1 tab
+
 }
 
-MainWindow::~MainWindow() {}
+MainWindow::~MainWindow()
+{
+    qDebug()<<"Destructor of ~MainWindow()";
+    //delete ui;
+}
 
 QWidget *MainWindow::createTopBar() {
+    qDebug()<<"createTopBar()";
+
     QWidget *topBar = new QWidget(this);
     QHBoxLayout *layout = new QHBoxLayout(topBar);
     layout->setContentsMargins(0, 0, 0, 0);
@@ -65,11 +74,18 @@ QWidget *MainWindow::createTopBar() {
 }
 
 void MainWindow::addNewTab(const QUrl &url) {
+    qDebug()<<"addNewTab()";
+
     QWebEngineView *view = new QWebEngineView;
+
+    profile = view->page()->profile();
+    profile->setHttpUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+                              "(KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36");
+
+
     view->load(url);
 
     int insertIndex = tabWidget->count() - 1;
-    // tabWidget->insertTab(insertIndex, view, "New Tab");
     tabWidget->insertTab(insertIndex, view, "New Tab");
     tabWidget->setCurrentIndex(insertIndex);
 
@@ -83,36 +99,54 @@ void MainWindow::addNewTab(const QUrl &url) {
 }
 
 QWebEngineView* MainWindow::currentWebView() const {
+    qDebug()<<"currentWebView() const";
+
     return qobject_cast<QWebEngineView*>(tabWidget->currentWidget());
 }
 
 void MainWindow::onBackClicked() {
+    qDebug()<<"onBackClicked()";
+
     if (auto view = currentWebView()) view->back();
 }
 
 void MainWindow::onForwardClicked() {
+    qDebug()<<"onForwardClicked()";
+
     if (auto view = currentWebView()) view->forward();
 }
 
 void MainWindow::onReloadClicked() {
+    qDebug()<<"onReloadClicked()";
+
     if (auto view = currentWebView()) view->reload();
 }
 
 void MainWindow::onUrlEntered() {
+
     QUrl url = QUrl::fromUserInput(urlLineEdit->text());
+    qDebug()<<"onUrlEntered(), url:"<<url;
+
     if (auto view = currentWebView()) view->load(url);
 }
 
 void MainWindow::onSearchClicked() {
+
     QUrl url = QUrl::fromUserInput(urlLineEdit->text());
+    qDebug()<<"onSearchClicked(), url:"<<url;
+
     if (auto view = currentWebView()) view->load(url);
 }
 
 void MainWindow::onUrlChanged(const QUrl &url) {
+    qDebug()<<"onUrlChanged(), url =>"<<url.toString();
+
     urlLineEdit->setText(url.toString());
 }
 
 void MainWindow::onTabChanged(int index) {
+    qDebug()<<"onTabChanged()";
+
     if (tabWidget->tabText(index) == "+") {
         addNewTab();
         return;
@@ -123,6 +157,8 @@ void MainWindow::onTabChanged(int index) {
 }
 
 void MainWindow::closeTab(int index) {
+    qDebug()<<"closeTab()";
+
     if (tabWidget->tabText(index) == "+") return;
     QWidget *tab = tabWidget->widget(index);
     tabWidget->removeTab(index);
