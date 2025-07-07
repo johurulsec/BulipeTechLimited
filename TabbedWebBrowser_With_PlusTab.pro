@@ -1,8 +1,8 @@
 QT += core gui widgets webenginewidgets
 CONFIG += c++17
 
-TARGET = bulipe-browser
-TEMPLATE = app
+TARGET = BulipetechLtd-webBrowser
+#TEMPLATE = app
 
 SOURCES += main.cpp \
     mainwindow.cpp

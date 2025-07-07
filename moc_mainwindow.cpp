@@ -40,9 +40,14 @@ template <> constexpr inline auto MainWindow::qt_create_metaobjectdata<qt_meta_t
     namespace QMC = QtMocConstants;
     QtMocHelpers::StringRefStorage qt_stringData {
         "MainWindow",
-        "addNewTab",
+        "addToHistory",
         "",
         "url",
+        "updateHistoryMenu",
+        "setupHistoryDock",
+        "addToBookmarks",
+        "updateBookmarksMenu",
+        "addNewTab",
         "onBackClicked",
         "onForwardClicked",
         "onReloadClicked",
@@ -55,33 +60,47 @@ template <> constexpr inline auto MainWindow::qt_create_metaobjectdata<qt_meta_t
     };
 
     QtMocHelpers::UintData qt_methods {
+        // Slot 'addToHistory'
+        QtMocHelpers::SlotData<void(const QUrl &)>(1, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { QMetaType::QUrl, 3 },
+        }}),
+        // Slot 'updateHistoryMenu'
+        QtMocHelpers::SlotData<void()>(4, 2, QMC::AccessPublic, QMetaType::Void),
+        // Slot 'setupHistoryDock'
+        QtMocHelpers::SlotData<void()>(5, 2, QMC::AccessPublic, QMetaType::Void),
+        // Slot 'addToBookmarks'
+        QtMocHelpers::SlotData<void(const QUrl &)>(6, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { QMetaType::QUrl, 3 },
+        }}),
+        // Slot 'updateBookmarksMenu'
+        QtMocHelpers::SlotData<void()>(7, 2, QMC::AccessPublic, QMetaType::Void),
         // Slot 'addNewTab'
-        QtMocHelpers::SlotData<void(const QUrl &)>(1, 2, QMC::AccessPrivate, QMetaType::Void, {{
+        QtMocHelpers::SlotData<void(const QUrl &)>(8, 2, QMC::AccessPrivate, QMetaType::Void, {{
             { QMetaType::QUrl, 3 },
         }}),
         // Slot 'addNewTab'
-        QtMocHelpers::SlotData<void()>(1, 2, QMC::AccessPrivate | QMC::MethodCloned, QMetaType::Void),
+        QtMocHelpers::SlotData<void()>(8, 2, QMC::AccessPrivate | QMC::MethodCloned, QMetaType::Void),
         // Slot 'onBackClicked'
-        QtMocHelpers::SlotData<void()>(4, 2, QMC::AccessPrivate, QMetaType::Void),
+        QtMocHelpers::SlotData<void()>(9, 2, QMC::AccessPrivate, QMetaType::Void),
         // Slot 'onForwardClicked'
-        QtMocHelpers::SlotData<void()>(5, 2, QMC::AccessPrivate, QMetaType::Void),
+        QtMocHelpers::SlotData<void()>(10, 2, QMC::AccessPrivate, QMetaType::Void),
         // Slot 'onReloadClicked'
-        QtMocHelpers::SlotData<void()>(6, 2, QMC::AccessPrivate, QMetaType::Void),
+        QtMocHelpers::SlotData<void()>(11, 2, QMC::AccessPrivate, QMetaType::Void),
         // Slot 'onUrlEntered'
-        QtMocHelpers::SlotData<void()>(7, 2, QMC::AccessPrivate, QMetaType::Void),
+        QtMocHelpers::SlotData<void()>(12, 2, QMC::AccessPrivate, QMetaType::Void),
         // Slot 'onSearchClicked'
-        QtMocHelpers::SlotData<void()>(8, 2, QMC::AccessPrivate, QMetaType::Void),
+        QtMocHelpers::SlotData<void()>(13, 2, QMC::AccessPrivate, QMetaType::Void),
         // Slot 'onTabChanged'
-        QtMocHelpers::SlotData<void(int)>(9, 2, QMC::AccessPrivate, QMetaType::Void, {{
-            { QMetaType::Int, 10 },
+        QtMocHelpers::SlotData<void(int)>(14, 2, QMC::AccessPrivate, QMetaType::Void, {{
+            { QMetaType::Int, 15 },
         }}),
         // Slot 'onUrlChanged'
-        QtMocHelpers::SlotData<void(const QUrl &)>(11, 2, QMC::AccessPrivate, QMetaType::Void, {{
+        QtMocHelpers::SlotData<void(const QUrl &)>(16, 2, QMC::AccessPrivate, QMetaType::Void, {{
             { QMetaType::QUrl, 3 },
         }}),
         // Slot 'closeTab'
-        QtMocHelpers::SlotData<void(int)>(12, 2, QMC::AccessPrivate, QMetaType::Void, {{
-            { QMetaType::Int, 10 },
+        QtMocHelpers::SlotData<void(int)>(17, 2, QMC::AccessPrivate, QMetaType::Void, {{
+            { QMetaType::Int, 15 },
         }}),
     };
     QtMocHelpers::UintData qt_properties {
@@ -106,16 +125,21 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
     auto *_t = static_cast<MainWindow *>(_o);
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
-        case 0: _t->addNewTab((*reinterpret_cast< std::add_pointer_t<QUrl>>(_a[1]))); break;
-        case 1: _t->addNewTab(); break;
-        case 2: _t->onBackClicked(); break;
-        case 3: _t->onForwardClicked(); break;
-        case 4: _t->onReloadClicked(); break;
-        case 5: _t->onUrlEntered(); break;
-        case 6: _t->onSearchClicked(); break;
-        case 7: _t->onTabChanged((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
-        case 8: _t->onUrlChanged((*reinterpret_cast< std::add_pointer_t<QUrl>>(_a[1]))); break;
-        case 9: _t->closeTab((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
+        case 0: _t->addToHistory((*reinterpret_cast< std::add_pointer_t<QUrl>>(_a[1]))); break;
+        case 1: _t->updateHistoryMenu(); break;
+        case 2: _t->setupHistoryDock(); break;
+        case 3: _t->addToBookmarks((*reinterpret_cast< std::add_pointer_t<QUrl>>(_a[1]))); break;
+        case 4: _t->updateBookmarksMenu(); break;
+        case 5: _t->addNewTab((*reinterpret_cast< std::add_pointer_t<QUrl>>(_a[1]))); break;
+        case 6: _t->addNewTab(); break;
+        case 7: _t->onBackClicked(); break;
+        case 8: _t->onForwardClicked(); break;
+        case 9: _t->onReloadClicked(); break;
+        case 10: _t->onUrlEntered(); break;
+        case 11: _t->onSearchClicked(); break;
+        case 12: _t->onTabChanged((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
+        case 13: _t->onUrlChanged((*reinterpret_cast< std::add_pointer_t<QUrl>>(_a[1]))); break;
+        case 14: _t->closeTab((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
         default: ;
         }
     }
@@ -140,14 +164,14 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 10)
+        if (_id < 15)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 10;
+        _id -= 15;
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 10)
+        if (_id < 15)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 10;
+        _id -= 15;
     }
     return _id;
 }
