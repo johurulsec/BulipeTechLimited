@@ -16,6 +16,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Setup top bar
     QWidget *topBar = createTopBar();
+    profile = QWebEngineProfile::defaultProfile();  // make sure to move this from addNewTab()
     mainLayout->addWidget(topBar);
 
     // Tab widget
@@ -34,6 +35,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Finalize
     setCentralWidget(central);
+
+    //DownloadManager
+    setupDownloadManager();
 
     // Menu Bar
     menuBar = new QMenuBar(this);
@@ -61,7 +65,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     historyMenu->addSeparator();
     historyMenu->addAction(clearHistoryAction);
-
 
     addNewTab(); // Start with 1 tab
 
@@ -92,6 +95,13 @@ QWidget *MainWindow::createTopBar() {
     reloadButton = new QPushButton("⟳", this);
     urlLineEdit = new QLineEdit(this);
     searchButton = new QPushButton("Search", this);
+
+    QPushButton *downloadsButton = new QPushButton("Downloads", this);
+    layout->addWidget(downloadsButton);
+    connect(downloadsButton, &QPushButton::clicked, this, [this]() {
+        downloadDock->setVisible(!downloadDock->isVisible());
+    });
+
 
     // Three-dot menu
     menuButton = new QPushButton("⋮", this);
@@ -125,6 +135,17 @@ QWidget *MainWindow::createTopBar() {
 
     // --- end Three-dot menu
 
+    //download menu start
+    downloadsMenu = new QMenu("Downloads", this);
+
+    QAction *showDownloadsMenuAction = new QAction("Show Downloads", this);
+    dropdownMenu->addAction(showDownloadsMenuAction);
+    connect(showDownloadsMenuAction, &QAction::triggered, this, [this]() {
+        downloadsMenu->popup(QCursor::pos());
+    });
+
+    //download menu end
+
     // bookmarks start
 
     QAction *bookmarkPageAction = new QAction("Bookmark This Page", this);
@@ -156,7 +177,7 @@ QWidget *MainWindow::createTopBar() {
         }
     });
 
-// bookmarks end
+    // bookmarks end
 
     layout->addWidget(backButton);
     layout->addWidget(forwardButton);
@@ -168,7 +189,7 @@ QWidget *MainWindow::createTopBar() {
     connect(forwardButton, &QPushButton::clicked, this, &MainWindow::onForwardClicked);
     connect(reloadButton, &QPushButton::clicked, this, &MainWindow::onReloadClicked);
     connect(urlLineEdit, &QLineEdit::returnPressed, this, &MainWindow::onUrlEntered);
-    connect(searchButton, &QPushButton::clicked, this, &MainWindow::onSearchClicked);
+    connect(searchButton, &QPushButton::clicked, this, &MainWindow::onSearchClicked);    
 
     return topBar;
 }
@@ -178,7 +199,7 @@ void MainWindow::addNewTab(const QUrl &url) {
 
     QWebEngineView *view = new QWebEngineView;
 
-    profile = view->page()->profile();
+    //profile = view->page()->profile();
     profile->setHttpUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
                               "(KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36");
 
@@ -381,6 +402,105 @@ void MainWindow::updateBookmarksMenu() {
     QSettings settings("BulipeTech", "BulipeBrowser");
     settings.setValue("bookmarks", bookmarksList);
 }
+
+
+void MainWindow::setupDownloadManager() {
+    qDebug()<<"setupDownloadManager()";
+
+    downloadDock = new QDockWidget("Download Manager", this);
+    downloadDock->setAllowedAreas(Qt::BottomDockWidgetArea | Qt::TopDockWidgetArea);
+
+    downloadListWidget = new QListWidget(downloadDock);
+    downloadDock->setWidget(downloadListWidget);
+    addDockWidget(Qt::BottomDockWidgetArea, downloadDock);
+    downloadDock->setVisible(false); // initially hidden
+
+    // Connect global profile to capture downloads
+    connect(profile, &QWebEngineProfile::downloadRequested,
+            this, &MainWindow::handleDownload);
+}
+
+
+void MainWindow::handleDownload(QWebEngineDownloadRequest *download) {
+    qDebug()<<"handleDownload()";
+
+    QString filename = download->downloadFileName();
+    QString fullPath = QStandardPaths::writableLocation(QStandardPaths::DownloadLocation) + "/" + filename;
+    download->setDownloadDirectory(QStandardPaths::writableLocation(QStandardPaths::DownloadLocation));
+    download->setDownloadFileName(filename);
+    download->accept(); // start download
+
+    qDebug()<<"download filename :"<<filename;
+
+    QListWidgetItem *item = new QListWidgetItem(QString("⬇ %1").arg(filename));
+    downloadListWidget->addItem(item);
+    downloadDock->setVisible(true);
+
+    // Create and attach progress bar
+    QProgressBar *progressBar = new QProgressBar();
+    progressBar->setRange(0, 100);
+    progressBar->setValue(0);
+    downloadListWidget->setItemWidget(item, progressBar);
+    downloadProgressBars[download] = progressBar;
+
+    connect(download, &QWebEngineDownloadRequest::totalBytesChanged, this, [=]() {
+        if (download->totalBytes() > 0) {
+            int percent = static_cast<int>((download->receivedBytes() * 100) / download->totalBytes());
+            progressBar->setValue(percent);
+        }
+    });
+
+    connect(download, &QWebEngineDownloadRequest::stateChanged, this, [=]() {
+        progressBar->setValue(100);
+        item->setText(QString("✅ %1 - Completed").arg(filename));
+    });
+
+    connect(download, &QObject::destroyed, this, [=]() {
+        downloadProgressBars.remove(download);
+    });
+
+    QAction *downloadAction = new QAction(QString("⬇ %1").arg(filename), this);
+    downloadsMenu->addAction(downloadAction);
+    downloadActions[download] = downloadAction;
+
+    // // Default click action: open the file after download finishes
+    // connect(downloadAction, &QAction::triggered, this, [=]() {
+    //     if (QFile::exists(download->downloadDirectory() + "/" + download->downloadFileName())) {
+    //         QDesktopServices::openUrl(QUrl::fromLocalFile(
+    //             download->downloadDirectory() + "/" + download->downloadFileName()));
+    //     }
+    // });
+
+    connect(downloadAction, &QAction::triggered, this, [=]() {
+        QString filePath = download->downloadDirectory() + "/" + download->downloadFileName();
+        if (QFile::exists(filePath)) {
+            qDebug()<<"pdf filePath :"<<filePath;
+
+            QUrl localUrl = QUrl::fromLocalFile(filePath);
+            qDebug()<<"pdf localUrl :"<<localUrl;
+            this->addNewTab(localUrl);  // ✅ Open in your own browser
+        }
+    });
+
+
+    // if (download->state() != QWebEngineDownloadRequest::DownloadCompleted) {
+    //     QMessageBox::warning(this, "Download Failed",
+    //                          QString("Failed to download %1.\nReason: %2")
+    //                              .arg(filename)
+    //                              .arg(download->interruptReasonString()));
+    // }
+
+    // if (download->state() == QWebEngineDownloadRequest::DownloadCompleted) {
+    //     QMessageBox::warning(this, "Download Completed",
+    //                          QString("Completed to download %1.\nReason: %2")
+    //                              .arg(filename)
+    //                              .arg(download->interruptReasonString()));
+    // }
+
+
+}
+
+
 
 
 

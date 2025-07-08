@@ -1,4 +1,5 @@
 QT += core gui widgets webenginewidgets
+QT += webenginecore
 CONFIG += c++17
 
 TARGET = BulipetechLtd-webBrowser

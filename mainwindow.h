@@ -20,12 +20,28 @@
 //bookmarks
 #include <QMap>
 
+//#include <QWebEngineDownloadItem>
+#include <QWebEngineDownloadRequest>  // Changed from QWebEngineDownloadItem
+#include <QProgressBar>
+#include<QMessageBox>
+#include<QFileDialog>
+#include<QStandardPaths>
+#include<QDesktopServices>
+
+
 class MainWindow : public QMainWindow {
     Q_OBJECT
 
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
+    QDockWidget *downloadDock;
+    QListWidget *downloadListWidget;
+    QMap<QWebEngineDownloadRequest*, QProgressBar*> downloadProgressBars;
+    QMenu *downloadsMenu;
+    QMap<QWebEngineDownloadRequest*, QAction*> downloadActions;
+
 
 public slots:
     void addToHistory(const QUrl &url);
@@ -35,8 +51,13 @@ public slots:
     void addToBookmarks(const QUrl &url);
     void updateBookmarksMenu();
 
+    void setupDownloadManager();
+    void handleDownload(QWebEngineDownloadRequest *download);
+
+    // void handleDownloadRequested(QWebEngineDownloadRequest *download);
+
 private slots:
-    void addNewTab(const QUrl &url = QUrl("https://bulipetech.com"));
+    void addNewTab(const QUrl &url = QUrl("https://www.google.com"));
     void onBackClicked();
     void onForwardClicked();
     void onReloadClicked();
@@ -73,6 +94,8 @@ private:
     QStringList bookmarksList;
     QMenu *bookmarksMenu;
     QPushButton *bookmarkStarButton;
+
+    QWebEngineView* webView;
 
 };
 
