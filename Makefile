@@ -1463,6 +1463,34 @@ moc_mainwindow.cpp: mainwindow.h \
 		../../../Qt/6.9.1/gcc_64/include/QtCore/qtimezone.h \
 		../../../Qt/6.9.1/gcc_64/include/QtCore/QStandardPaths \
 		../../../Qt/6.9.1/gcc_64/include/QtCore/qstandardpaths.h \
+		../../../Qt/6.9.1/gcc_64/include/QtGui/QDesktopServices \
+		../../../Qt/6.9.1/gcc_64/include/QtGui/qdesktopservices.h \
+		../../../Qt/6.9.1/gcc_64/include/QtCore/QCoreApplication \
+		../../../Qt/6.9.1/gcc_64/include/QtNetwork/QNetworkAccessManager \
+		../../../Qt/6.9.1/gcc_64/include/QtNetwork/qnetworkaccessmanager.h \
+		../../../Qt/6.9.1/gcc_64/include/QtNetwork/qnetworkrequest.h \
+		../../../Qt/6.9.1/gcc_64/include/QtNetwork/qhttpheaders.h \
+		../../../Qt/6.9.1/gcc_64/include/QtCore/QSharedDataPointer \
+		../../../Qt/6.9.1/gcc_64/include/QtCore/QVariant \
+		../../../Qt/6.9.1/gcc_64/include/QtCore/q26numeric.h \
+		../../../Qt/6.9.1/gcc_64/include/QtNetwork/QSslConfiguration \
+		../../../Qt/6.9.1/gcc_64/include/QtNetwork/qsslconfiguration.h \
+		../../../Qt/6.9.1/gcc_64/include/QtNetwork/qsslsocket.h \
+		../../../Qt/6.9.1/gcc_64/include/QtNetwork/qtcpsocket.h \
+		../../../Qt/6.9.1/gcc_64/include/QtNetwork/qabstractsocket.h \
+		../../../Qt/6.9.1/gcc_64/include/QtNetwork/qhostaddress.h \
+		../../../Qt/6.9.1/gcc_64/include/QtNetwork/qsslerror.h \
+		../../../Qt/6.9.1/gcc_64/include/QtNetwork/QSslPreSharedKeyAuthenticator \
+		../../../Qt/6.9.1/gcc_64/include/QtNetwork/qsslpresharedkeyauthenticator.h \
+		../../../Qt/6.9.1/gcc_64/include/QtCore/QMetaType \
+		../../../Qt/6.9.1/gcc_64/include/QtNetwork/QNetworkReply \
+		../../../Qt/6.9.1/gcc_64/include/QtNetwork/qnetworkreply.h \
+		../../../Qt/6.9.1/gcc_64/include/QtCore/QIODevice \
+		../../../Qt/6.9.1/gcc_64/include/QtNetwork/QNetworkRequest \
+		../../../Qt/6.9.1/gcc_64/include/QtCore/QProcess \
+		../../../Qt/6.9.1/gcc_64/include/QtCore/qprocess.h \
+		../../../Qt/6.9.1/gcc_64/include/QtCore/QSocketNotifier \
+		../../../Qt/6.9.1/gcc_64/include/QtCore/qsocketnotifier.h \
 		moc_predefs.h \
 		../../../Qt/6.9.1/gcc_64/libexec/moc
 	/home/bulipe/Qt/6.9.1/gcc_64/libexec/moc $(DEFINES) --include /home/bulipe/Documents/BulipeTask/TabbedWebBrowser_With_PlusTab/moc_predefs.h -I/home/bulipe/Qt/6.9.1/gcc_64/mkspecs/linux-g++ -I/home/bulipe/Documents/BulipeTask/TabbedWebBrowser_With_PlusTab -I/home/bulipe/Qt/6.9.1/gcc_64/include -I/home/bulipe/Qt/6.9.1/gcc_64/include/QtWebEngineWidgets -I/home/bulipe/Qt/6.9.1/gcc_64/include/QtPrintSupport -I/home/bulipe/Qt/6.9.1/gcc_64/include/QtWidgets -I/home/bulipe/Qt/6.9.1/gcc_64/include/QtWebEngineCore -I/home/bulipe/Qt/6.9.1/gcc_64/include/QtQuick -I/home/bulipe/Qt/6.9.1/gcc_64/include/QtOpenGL -I/home/bulipe/Qt/6.9.1/gcc_64/include/QtGui -I/home/bulipe/Qt/6.9.1/gcc_64/include/QtQmlMeta -I/home/bulipe/Qt/6.9.1/gcc_64/include/QtQmlModels -I/home/bulipe/Qt/6.9.1/gcc_64/include/QtQmlWorkerScript -I/home/bulipe/Qt/6.9.1/gcc_64/include/QtWebChannel -I/home/bulipe/Qt/6.9.1/gcc_64/include/QtQml -I/home/bulipe/Qt/6.9.1/gcc_64/include/QtNetwork -I/home/bulipe/Qt/6.9.1/gcc_64/include/QtQmlIntegration -I/home/bulipe/Qt/6.9.1/gcc_64/include/QtPositioning -I/home/bulipe/Qt/6.9.1/gcc_64/include/QtCore -I/usr/include/c++/13 -I/usr/include/x86_64-linux-gnu/c++/13 -I/usr/include/c++/13/backward -I/usr/lib/gcc/x86_64-linux-gnu/13/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include mainwindow.h -o moc_mainwindow.cpp
@@ -1779,6 +1807,34 @@ main.o: main.cpp mainwindow.h \
 		../../../Qt/6.9.1/gcc_64/include/QtCore/qtimezone.h \
 		../../../Qt/6.9.1/gcc_64/include/QtCore/QStandardPaths \
 		../../../Qt/6.9.1/gcc_64/include/QtCore/qstandardpaths.h \
+		../../../Qt/6.9.1/gcc_64/include/QtGui/QDesktopServices \
+		../../../Qt/6.9.1/gcc_64/include/QtGui/qdesktopservices.h \
+		../../../Qt/6.9.1/gcc_64/include/QtCore/QCoreApplication \
+		../../../Qt/6.9.1/gcc_64/include/QtNetwork/QNetworkAccessManager \
+		../../../Qt/6.9.1/gcc_64/include/QtNetwork/qnetworkaccessmanager.h \
+		../../../Qt/6.9.1/gcc_64/include/QtNetwork/qnetworkrequest.h \
+		../../../Qt/6.9.1/gcc_64/include/QtNetwork/qhttpheaders.h \
+		../../../Qt/6.9.1/gcc_64/include/QtCore/QSharedDataPointer \
+		../../../Qt/6.9.1/gcc_64/include/QtCore/QVariant \
+		../../../Qt/6.9.1/gcc_64/include/QtCore/q26numeric.h \
+		../../../Qt/6.9.1/gcc_64/include/QtNetwork/QSslConfiguration \
+		../../../Qt/6.9.1/gcc_64/include/QtNetwork/qsslconfiguration.h \
+		../../../Qt/6.9.1/gcc_64/include/QtNetwork/qsslsocket.h \
+		../../../Qt/6.9.1/gcc_64/include/QtNetwork/qtcpsocket.h \
+		../../../Qt/6.9.1/gcc_64/include/QtNetwork/qabstractsocket.h \
+		../../../Qt/6.9.1/gcc_64/include/QtNetwork/qhostaddress.h \
+		../../../Qt/6.9.1/gcc_64/include/QtNetwork/qsslerror.h \
+		../../../Qt/6.9.1/gcc_64/include/QtNetwork/QSslPreSharedKeyAuthenticator \
+		../../../Qt/6.9.1/gcc_64/include/QtNetwork/qsslpresharedkeyauthenticator.h \
+		../../../Qt/6.9.1/gcc_64/include/QtCore/QMetaType \
+		../../../Qt/6.9.1/gcc_64/include/QtNetwork/QNetworkReply \
+		../../../Qt/6.9.1/gcc_64/include/QtNetwork/qnetworkreply.h \
+		../../../Qt/6.9.1/gcc_64/include/QtCore/QIODevice \
+		../../../Qt/6.9.1/gcc_64/include/QtNetwork/QNetworkRequest \
+		../../../Qt/6.9.1/gcc_64/include/QtCore/QProcess \
+		../../../Qt/6.9.1/gcc_64/include/QtCore/qprocess.h \
+		../../../Qt/6.9.1/gcc_64/include/QtCore/QSocketNotifier \
+		../../../Qt/6.9.1/gcc_64/include/QtCore/qsocketnotifier.h \
 		../../../Qt/6.9.1/gcc_64/include/QtWidgets/QApplication \
 		../../../Qt/6.9.1/gcc_64/include/QtWidgets/qapplication.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
@@ -2074,6 +2130,34 @@ mainwindow.o: mainwindow.cpp mainwindow.h \
 		../../../Qt/6.9.1/gcc_64/include/QtCore/qtimezone.h \
 		../../../Qt/6.9.1/gcc_64/include/QtCore/QStandardPaths \
 		../../../Qt/6.9.1/gcc_64/include/QtCore/qstandardpaths.h \
+		../../../Qt/6.9.1/gcc_64/include/QtGui/QDesktopServices \
+		../../../Qt/6.9.1/gcc_64/include/QtGui/qdesktopservices.h \
+		../../../Qt/6.9.1/gcc_64/include/QtCore/QCoreApplication \
+		../../../Qt/6.9.1/gcc_64/include/QtNetwork/QNetworkAccessManager \
+		../../../Qt/6.9.1/gcc_64/include/QtNetwork/qnetworkaccessmanager.h \
+		../../../Qt/6.9.1/gcc_64/include/QtNetwork/qnetworkrequest.h \
+		../../../Qt/6.9.1/gcc_64/include/QtNetwork/qhttpheaders.h \
+		../../../Qt/6.9.1/gcc_64/include/QtCore/QSharedDataPointer \
+		../../../Qt/6.9.1/gcc_64/include/QtCore/QVariant \
+		../../../Qt/6.9.1/gcc_64/include/QtCore/q26numeric.h \
+		../../../Qt/6.9.1/gcc_64/include/QtNetwork/QSslConfiguration \
+		../../../Qt/6.9.1/gcc_64/include/QtNetwork/qsslconfiguration.h \
+		../../../Qt/6.9.1/gcc_64/include/QtNetwork/qsslsocket.h \
+		../../../Qt/6.9.1/gcc_64/include/QtNetwork/qtcpsocket.h \
+		../../../Qt/6.9.1/gcc_64/include/QtNetwork/qabstractsocket.h \
+		../../../Qt/6.9.1/gcc_64/include/QtNetwork/qhostaddress.h \
+		../../../Qt/6.9.1/gcc_64/include/QtNetwork/qsslerror.h \
+		../../../Qt/6.9.1/gcc_64/include/QtNetwork/QSslPreSharedKeyAuthenticator \
+		../../../Qt/6.9.1/gcc_64/include/QtNetwork/qsslpresharedkeyauthenticator.h \
+		../../../Qt/6.9.1/gcc_64/include/QtCore/QMetaType \
+		../../../Qt/6.9.1/gcc_64/include/QtNetwork/QNetworkReply \
+		../../../Qt/6.9.1/gcc_64/include/QtNetwork/qnetworkreply.h \
+		../../../Qt/6.9.1/gcc_64/include/QtCore/QIODevice \
+		../../../Qt/6.9.1/gcc_64/include/QtNetwork/QNetworkRequest \
+		../../../Qt/6.9.1/gcc_64/include/QtCore/QProcess \
+		../../../Qt/6.9.1/gcc_64/include/QtCore/qprocess.h \
+		../../../Qt/6.9.1/gcc_64/include/QtCore/QSocketNotifier \
+		../../../Qt/6.9.1/gcc_64/include/QtCore/qsocketnotifier.h \
 		../../../Qt/6.9.1/gcc_64/include/QtWidgets/QVBoxLayout \
 		../../../Qt/6.9.1/gcc_64/include/QtWidgets/qboxlayout.h \
 		../../../Qt/6.9.1/gcc_64/include/QtWidgets/qlayout.h \

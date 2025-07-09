@@ -20,13 +20,15 @@
 //bookmarks
 #include <QMap>
 
-//#include <QWebEngineDownloadItem>
 #include <QWebEngineDownloadRequest>  // Changed from QWebEngineDownloadItem
 #include <QProgressBar>
 #include<QMessageBox>
 #include<QFileDialog>
 #include<QStandardPaths>
 #include<QDesktopServices>
+#include<QCoreApplication>
+#include<QNetworkAccessManager>
+#include<QNetworkReply>
 
 
 class MainWindow : public QMainWindow {
@@ -54,7 +56,6 @@ public slots:
     void setupDownloadManager();
     void handleDownload(QWebEngineDownloadRequest *download);
 
-    // void handleDownloadRequested(QWebEngineDownloadRequest *download);
 
 private slots:
     void addNewTab(const QUrl &url = QUrl("https://www.google.com"));
@@ -66,6 +67,7 @@ private slots:
     void onTabChanged(int index);
     void onUrlChanged(const QUrl &url);
     void closeTab(int index);
+    QString stripUrlPrefix(const QString &input);
 
 private:
     QWidget *createTopBar();

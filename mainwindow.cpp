@@ -195,7 +195,7 @@ QWidget *MainWindow::createTopBar() {
 }
 
 void MainWindow::addNewTab(const QUrl &url) {
-    qDebug()<<"addNewTab()";
+    qDebug()<<"addNewTab() for this url :"<<url.toString();
 
     QWebEngineView *view = new QWebEngineView;
 
@@ -246,15 +246,513 @@ void MainWindow::onReloadClicked() {
 void MainWindow::onUrlEntered() {
 
     QUrl url = QUrl::fromUserInput(urlLineEdit->text());
-    qDebug()<<"onUrlEntered(), url:"<<url;
+    qDebug()<<"onUrlEntered(), url:"<<url.toString();
+    // QString tmp_url = url.toString();
+    // QString sub_str = ".com";
+    // if (tmp_url.contains(sub_str)) {
+    //     qDebug() << "Substring .com found!";
+    // } else {
+    //     qDebug() << "Substring .com not found.";
+    //     tmp_url += sub_str;
 
-    if (auto view = currentWebView()) view->load(url);
+    //     if(QUrl::fromUserInput(tmp_url).isValid()){
+    //         qDebug() << "url is valid";
+    //         url = QUrl::fromUserInput(tmp_url);
+    //     }else{
+    //         qDebug() << "url is not valid.";
+    //     }
+
+    // }
+
+    if (auto view = currentWebView()){
+        view->load(url);
+    }
 }
+
+
+//2nd way
+
+/*
+void MainWindow::onUrlEntered() {
+
+    QUrl url2 = QUrl::fromUserInput(urlLineEdit->text());
+    qDebug()<<"onUrlEntered(), url:"<<url2.toString();
+
+    QString input = urlLineEdit->text().trimmed();
+    QStringList domainExtensions = { ".com", ".net", ".org" };
+    QUrl finalUrl;
+    bool loaded = false;
+
+    // Check if it's already a valid URL with a scheme
+    QUrl url = QUrl::fromUserInput(input);
+    if (url.isValid() && url.scheme().startsWith("http")) {
+        finalUrl = url;
+        loaded = true;
+        qDebug() << "Input is valid URL with scheme.";
+    } else {
+        // Try appending common domain extensions
+        for (const QString &ext : domainExtensions) {
+            QString tryUrlStr = input;
+            if (!input.contains(ext)) {
+                tryUrlStr += ext;
+            }
+
+            QUrl tryUrl = QUrl::fromUserInput(tryUrlStr);
+            if (tryUrl.isValid()) {
+                qDebug() << "Trying with extension:" << ext << "->" << tryUrl;
+                finalUrl = tryUrl;
+                loaded = true;
+                break;
+            }
+        }
+    }
+
+    // If no valid URL, treat it as search query (Google fallback)
+    if (!loaded) {
+        QString query = QUrl::toPercentEncoding(input);
+        finalUrl = QUrl("https://www.google.com/search?q=" + query);
+        qDebug() << "Fallback to Google Search:" << finalUrl;
+    }
+
+    // Load finalUrl
+    if (auto view = currentWebView()) {
+        view->load(finalUrl);
+    }
+}
+*/
+
+//3rd way
+
+/*
+void MainWindow::onUrlEntered() {
+    QString input = urlLineEdit->text().trimmed();
+
+    QStringList prefixes = {
+        "https://", "http://", "https://www.", "http://www."
+    };
+    QStringList extensions = {
+        "", ".com", ".net", ".org", ".bd", ".info"
+    };
+
+    QUrl finalUrl;
+    bool found = false;
+
+    // Case 1: check if input is a valid URL directly
+    QUrl initialUrl = QUrl::fromUserInput(input);
+    if (initialUrl.isValid() && initialUrl.scheme().startsWith("http")) {
+        finalUrl = initialUrl;
+        found = true;
+        qDebug() << "Direct valid URL:" << finalUrl.toString();
+    } else {
+        // Case 2: Try combinations of prefixes and extensions
+        for (const QString &prefix : prefixes) {
+            for (const QString &ext : extensions) {
+                QString tryStr = input;
+
+                if (!input.endsWith(ext) && !ext.isEmpty()) {
+                    tryStr += ext;
+                }
+
+                QString fullTry = prefix + tryStr;
+                QUrl tryUrl(fullTry);
+
+                if (tryUrl.isValid()) {
+                    qDebug() << "Trying:" << tryUrl;
+                    finalUrl = tryUrl;
+                    found = true;
+                    goto LOAD;
+                }
+            }
+        }
+    }
+
+    // Case 3: Fallback to search engine
+    if (!found) {
+        QString query = QUrl::toPercentEncoding(input);
+        finalUrl = QUrl("https://www.google.com/search?q=" + query);
+        qDebug() << "Fallback to search:" << finalUrl;
+    }
+
+LOAD:
+    urlLineEdit->setText(finalUrl.toString());
+    if (auto view = currentWebView()) {
+        qDebug()<<"before load url ...";
+        view->load(finalUrl);
+    }
+}
+*/
+
+
+/*
+void MainWindow::onUrlEntered() {
+
+    //     QUrl url = QUrl::fromUserInput(urlLineEdit->text());
+    //     qDebug()<<"onUrlEntered(), url:"<<url.toString();
+    //     QString tmp_url = url.toString();
+    //     QString sub_str = ".com";
+    //     if (tmp_url.contains(sub_str)) {
+    //         qDebug() << "Substring .com found!";
+    //     } else {
+    //         qDebug() << "Substring .com not found.";
+    //         tmp_url += sub_str;
+
+    //         if(QUrl::fromUserInput(tmp_url).isValid()){
+    //             qDebug() << "url is valid";
+    //             url = QUrl::fromUserInput(tmp_url);
+    //         }else{
+    //             qDebug() << "url is not valid.";
+    //         }
+
+    //     }
+
+    //     if (auto view = currentWebView()){
+    //         view->load(url);
+    //     }
+
+    QString input = urlLineEdit->text().trimmed();
+
+    // QStringList prefixes = {"https://", "http://", "https://www.", "http://www."};
+    // QStringList extensions = {"", ".com", ".net", ".org", ".bd", ".info"};
+
+    QStringList prefixes = {"https://www."};
+    QStringList extensions = {"", ".com"};
+
+    QStringList tryUrls;
+
+    // Generate all URL combinations
+    for (const QString &prefix : prefixes) {
+        for (const QString &ext : extensions) {
+            QString tryStr = input;
+            if (!ext.isEmpty() && !tryStr.endsWith(ext))
+                tryStr += ext;
+
+            QString fullUrlStr = prefix + tryStr;
+            QUrl url(fullUrlStr);
+            if (url.isValid()) {
+                tryUrls << url.toString();
+                qDebug()<<"generated url :"<<url.toString();
+            }
+        }
+    }
+
+    // Now, check each one via QNetworkAccessManager
+    QNetworkAccessManager *manager = new QNetworkAccessManager(this);
+
+    std::function<void(int)> tryNextUrl;
+    tryNextUrl = [=](int index) mutable {
+        qDebug() <<"tryUrls.size() :"<<tryUrls.size()<<", index:"<<index;
+
+        if (index >= tryUrls.size()) {
+            qDebug() << "index >= tryUrls.size()";
+
+            // Fallback: Google search
+            QString query = QUrl::toPercentEncoding(input);
+            QUrl fallback("https://www.google.com/search?q=" + query);
+            qDebug() << "All attempts failed. Loading fallback:" << fallback;
+            urlLineEdit->setText(fallback.toString());
+            if (auto view = currentWebView()) {
+                view->load(fallback);
+            }
+            qDebug() << "before return!";
+            return;
+        }
+
+        QUrl tryUrl(tryUrls[index]);
+        QNetworkRequest request(tryUrl);
+        QNetworkReply *reply = manager->head(request);
+
+        QObject::connect(reply, &QNetworkReply::finished, this, [=]() mutable {
+            QVariant statusCode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute);
+            qDebug() << "statusCode :"<<statusCode<<" statuscode.toInt():"<<statusCode.toInt();
+
+            if (reply->error() == QNetworkReply::NoError &&
+                statusCode.isValid() &&
+                statusCode.toInt() >= 200 && statusCode.toInt() < 400) {
+                // Valid URL, load it
+                qDebug() << "Valid URL found:" << tryUrl.toString();
+                urlLineEdit->setText(tryUrl.toString());
+                if (auto view = currentWebView()) {
+                    view->load(tryUrl);
+                }
+                reply->deleteLater();
+                manager->deleteLater();
+                return;
+
+            } else {
+                index +=1;
+                qDebug() << "Invalid URL found:" << tryUrl.toString()<<", next index:"<<index;
+                reply->deleteLater();
+                // tryNextUrl(index + 1);
+                index +=1;
+                tryNextUrl(index);
+
+            }
+        });
+    };
+
+    tryNextUrl(0); // Start testing from first URL
+}
+*/
+
+
+//4rt way
+
+/*
+void MainWindow::onUrlEntered() {
+    //first step
+
+    QStringList tryUrls;
+    QUrl rawUrl = QUrl::fromUserInput(urlLineEdit->text());
+    qDebug()<<"onUrlEntered(), rawUrl:"<<rawUrl.toString();
+
+    if (rawUrl.isValid()) {
+        tryUrls << rawUrl.toString();
+    }
+
+    //second step
+
+    QString input = urlLineEdit->text().trimmed();
+    qDebug()<<"user url input :"<<input;
+
+    QStringList prefixes = {"https://", "http://", "https://www.", "http://www."};
+    QStringList extensions = {"", ".com", ".net", ".org", ".bd", ".info"};
+
+    // Generate all URL combinations
+    for (const QString &prefix : prefixes) {
+        for (const QString &ext : extensions) {
+            QString tryStr = input;
+            if (!ext.isEmpty() && !tryStr.endsWith(ext))
+                tryStr += ext;
+
+            QString fullUrlStr = prefix + tryStr;
+            QUrl url(fullUrlStr);
+            if (url.isValid()) {
+                tryUrls << url.toString();
+                qDebug()<<"generated url :"<<url.toString();
+            }
+        }
+    }
+
+    QNetworkAccessManager *manager = new QNetworkAccessManager(this);
+
+    // Use shared_ptr to capture lambda recursively
+    auto tryNextUrl = std::make_shared<std::function<void(int)>>();
+
+    *tryNextUrl = [=](int index) mutable {
+        qDebug() <<"tryUrls.size() :"<<tryUrls.size()<<", index:"<<index;
+
+        if (index >= tryUrls.size()) {
+            // Fallback to search
+            QString query = QUrl::toPercentEncoding(input);
+            QUrl fallback("https://www.google.com/search?q=" + query);
+            qDebug() << "All attempts failed. Loading fallback:" << fallback;
+            urlLineEdit->setText(fallback.toString());
+            if (auto view = currentWebView()) {
+                view->load(fallback);
+            }
+            manager->deleteLater();
+            qDebug() << "before return!";
+            return;
+        }
+
+        QUrl tryUrl(tryUrls[index]);
+        QNetworkRequest request(tryUrl);
+        QNetworkReply *reply = manager->head(request);
+
+        QObject::connect(reply, &QNetworkReply::finished, this, [=]() mutable {
+            QVariant statusCode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute);
+            qDebug() << "statusCode :"<<statusCode<<" statuscode.toInt():"<<statusCode.toInt();
+
+            if (reply->error() == QNetworkReply::NoError &&
+                statusCode.isValid() &&
+                statusCode.toInt() >= 200 && statusCode.toInt() < 400) {
+
+                qDebug() << "Valid URL found:" << tryUrl;
+                urlLineEdit->setText(tryUrl.toString());
+                if (auto view = currentWebView()) {
+                    view->load(tryUrl);
+                }
+                reply->deleteLater();
+                manager->deleteLater();
+            } else {
+                qDebug() << "Invalid URL found:" << tryUrl.toString()<<", next index:"<<index+1;
+
+                reply->deleteLater();
+                (*tryNextUrl)(index + 1); // recursive call
+            }
+        });
+    };
+
+    // Start from index 0
+    (*tryNextUrl)(0);
+
+}
+*/
+
+
+QString MainWindow::stripUrlPrefix(const QString &input)
+{
+    qDebug()<<"stripUrlPrefix(), user garbage input url :"<<input;
+
+    QString cleaned = input.trimmed();
+
+    // Parse with QUrl (if possible)
+    QUrl url = QUrl::fromUserInput(cleaned);
+    if (url.isValid() && !url.host().isEmpty()) {
+        QString host = url.host();
+
+        // Remove "www." if present
+        if (host.startsWith("www."))
+            host = host.mid(4);
+
+        return host;
+    }
+
+    // Else fallback: manually remove common schemes/prefixes
+    cleaned.remove(QRegularExpression("^https?://"));
+    cleaned.remove(QRegularExpression("^www\\."));
+
+    qDebug()<<"stripUrlPrefix(), after clean url-core part :"<<cleaned;
+
+    return cleaned;
+}
+
+// 5th way
+
+/*
+void MainWindow::onUrlEntered() {
+    //first step
+
+    // QStringList tryUrls;
+    // QUrl rawUrl = QUrl::fromUserInput(urlLineEdit->text());
+    // qDebug()<<"onUrlEntered(), rawUrl:"<<rawUrl.toString();
+
+    // QString corePart = stripUrlPrefix(rawUrl.toString()); // ✅ Extract "google" from "http://google"
+    // qDebug() << "cleaned input:" << corePart;
+
+    // if (rawUrl.isValid()) {
+    //     tryUrls << rawUrl.toString();
+    // }
+
+    // //second step
+
+    // QString input = urlLineEdit->text().trimmed();
+    // qDebug()<<"user url input :"<<input;
+
+    // QStringList prefixes = {"https://", "http://", "https://www.", "http://www."};
+    // QStringList extensions = {"", ".com", ".net", ".org", ".bd", ".info"};
+
+    // // Generate all URL combinations
+    // for (const QString &prefix : prefixes) {
+    //     for (const QString &ext : extensions) {
+    //         QString tryStr = input;
+    //         if (!ext.isEmpty() && !tryStr.endsWith(ext))
+    //             tryStr += ext;
+
+    //         QString fullUrlStr = prefix + tryStr;
+    //         QUrl url(fullUrlStr);
+    //         if (url.isValid()) {
+    //             tryUrls << url.toString();
+    //             qDebug()<<"generated url :"<<url.toString();
+    //         }
+    //     }
+    // }
+
+    QString input = urlLineEdit->text().trimmed();
+    qDebug() << "user url input :" << input;
+
+    // 1. Try loading user input directly
+    QUrl rawUrl = QUrl::fromUserInput(input);
+    qDebug() << "onUrlEntered(), rawUrl:" << rawUrl.toString();
+
+    QString corePart = stripUrlPrefix(input); // ✅ Extract "google" from "http://google"
+    qDebug() << "cleaned input:" << corePart;
+
+    QStringList prefixes = {"https://", "http://", "https://www.", "http://www."};
+    QStringList extensions = {"", ".com", ".net", ".org", ".bd", ".info"};
+
+    QStringList tryUrls;
+
+    // First try raw input
+    if (rawUrl.isValid() && rawUrl.scheme().startsWith("http"))
+        tryUrls << rawUrl.toString();
+
+    // Generate alternative URLs
+    for (const QString &prefix : prefixes) {
+        for (const QString &ext : extensions) {
+            QString fullTry = prefix + corePart;
+            if (!ext.isEmpty() && !corePart.endsWith(ext))
+                fullTry += ext;
+
+            QUrl tryUrl(fullTry);
+            if (tryUrl.isValid() && !tryUrls.contains(tryUrl.toString())) {
+                tryUrls << tryUrl.toString();
+                qDebug() << "generated url :" << tryUrl.toString();
+            }
+        }
+    }
+
+    QNetworkAccessManager *manager = new QNetworkAccessManager(this);
+
+    // Use shared_ptr to capture lambda recursively
+    auto tryNextUrl = std::make_shared<std::function<void(int)>>();
+
+    *tryNextUrl = [=](int index) mutable {
+        qDebug() <<"tryUrls.size() :"<<tryUrls.size()<<", index:"<<index;
+
+        if (index >= tryUrls.size()) {
+            // Fallback to search
+            QString query = QUrl::toPercentEncoding(input);
+            QUrl fallback("https://www.google.com/search?q=" + query);
+            qDebug() << "All attempts failed. Loading fallback:" << fallback;
+            urlLineEdit->setText(fallback.toString());
+            if (auto view = currentWebView()) {
+                view->load(fallback);
+            }
+            manager->deleteLater();
+            qDebug() << "before return!";
+            return;
+        }
+
+        QUrl tryUrl(tryUrls[index]);
+        QNetworkRequest request(tryUrl);
+        QNetworkReply *reply = manager->head(request);
+
+        QObject::connect(reply, &QNetworkReply::finished, this, [=]() mutable {
+            QVariant statusCode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute);
+            qDebug() << "statusCode :"<<statusCode<<" statuscode.toInt():"<<statusCode.toInt();
+
+            if (reply->error() == QNetworkReply::NoError &&
+                statusCode.isValid() &&
+                statusCode.toInt() >= 200 && statusCode.toInt() < 400) {
+
+                qDebug() << "Valid URL found:" << tryUrl;
+                urlLineEdit->setText(tryUrl.toString());
+                if (auto view = currentWebView()) {
+                    view->load(tryUrl);
+                }
+                reply->deleteLater();
+                manager->deleteLater();
+            } else {
+                qDebug() << "Invalid URL found:" << tryUrl.toString()<<", next index:"<<index+1;
+
+                reply->deleteLater();
+                (*tryNextUrl)(index + 1); // recursive call
+            }
+        });
+    };
+
+    // Start from index 0
+    (*tryNextUrl)(0);
+
+}
+*/
+
 
 void MainWindow::onSearchClicked() {
 
     QUrl url = QUrl::fromUserInput(urlLineEdit->text());
-    qDebug()<<"onSearchClicked(), url:"<<url;
+    qDebug()<<"onSearchClicked(), url:"<<url;   
 
     if (auto view = currentWebView()) view->load(url);
 }
@@ -275,6 +773,7 @@ void MainWindow::onTabChanged(int index) {
         return;
     }
     if (auto view = currentWebView()) {
+        qDebug()<<"auto view = currentWebView()? Yes";
         urlLineEdit->setText(view->url().toString());
     }
 }
@@ -430,7 +929,7 @@ void MainWindow::handleDownload(QWebEngineDownloadRequest *download) {
     download->setDownloadFileName(filename);
     download->accept(); // start download
 
-    qDebug()<<"download filename :"<<filename;
+    qDebug()<<"inside handledownload() filename :"<<filename;
 
     QListWidgetItem *item = new QListWidgetItem(QString("⬇ %1").arg(filename));
     downloadListWidget->addItem(item);
@@ -473,33 +972,27 @@ void MainWindow::handleDownload(QWebEngineDownloadRequest *download) {
 
     connect(downloadAction, &QAction::triggered, this, [=]() {
         QString filePath = download->downloadDirectory() + "/" + download->downloadFileName();
-        if (QFile::exists(filePath)) {
-            qDebug()<<"pdf filePath :"<<filePath;
+        qDebug()<<"pdf filePath :"<<filePath;
 
-            QUrl localUrl = QUrl::fromLocalFile(filePath);
-            qDebug()<<"pdf localUrl :"<<localUrl;
-            this->addNewTab(localUrl);  // ✅ Open in your own browser
-        }
+        if (QFile::exists(filePath)) {
+            qDebug()<<"QFile::exists(filePath)? Yes";
+
+            // QUrl localUrl = QUrl::fromLocalFile(filePath);
+            // qDebug()<<"pdf localUrl :"<<localUrl.toString();
+            // this->addNewTab(localUrl);  // ✅ Open in your own browser
+
+            QString viewerPath = QUrl::fromLocalFile(QCoreApplication::applicationDirPath() + "/pdfjs/web/viewer.html").toString();
+            qDebug()<<"viewerPath :"<<viewerPath;
+            QUrl pdfViewerUrl = QUrl(viewerPath + "?file=" + QUrl::fromLocalFile(filePath).toEncoded());
+            qDebug()<<"pdfViewerUrl :"<<pdfViewerUrl.toString();
+
+            addNewTab(pdfViewerUrl);
+        }        
+
     });
 
 
-    // if (download->state() != QWebEngineDownloadRequest::DownloadCompleted) {
-    //     QMessageBox::warning(this, "Download Failed",
-    //                          QString("Failed to download %1.\nReason: %2")
-    //                              .arg(filename)
-    //                              .arg(download->interruptReasonString()));
-    // }
-
-    // if (download->state() == QWebEngineDownloadRequest::DownloadCompleted) {
-    //     QMessageBox::warning(this, "Download Completed",
-    //                          QString("Completed to download %1.\nReason: %2")
-    //                              .arg(filename)
-    //                              .arg(download->interruptReasonString()));
-    // }
-
-
 }
-
 
 
 
