@@ -53,19 +53,15 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = main.cpp \
-		bridge.cpp \
 		browserinterface.cpp \
 		mainwindow.cpp qrc_resources.cpp \
 		moc_mainwindow.cpp \
-		moc_bridge.cpp \
 		moc_browserinterface.cpp
 OBJECTS       = main.o \
-		bridge.o \
 		browserinterface.o \
 		mainwindow.o \
 		qrc_resources.o \
 		moc_mainwindow.o \
-		moc_bridge.o \
 		moc_browserinterface.o
 DIST          = home.html \
 		../../../../Qt/6.7.3/gcc_64/mkspecs/features/spec_pre.prf \
@@ -312,9 +308,7 @@ DIST          = home.html \
 		../../../../Qt/6.7.3/gcc_64/mkspecs/features/yacc.prf \
 		../../../../Qt/6.7.3/gcc_64/mkspecs/features/lex.prf \
 		TabbedWebBrowser_With_PlusTab.pro mainwindow.h \
-		bridge.h \
 		browserinterface.h main.cpp \
-		bridge.cpp \
 		browserinterface.cpp \
 		mainwindow.cpp
 QMAKE_TARGET  = sample-webBrowser_9July
@@ -861,8 +855,8 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents resources.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents ../../../../Qt/6.7.3/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents mainwindow.h bridge.h browserinterface.h $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp bridge.cpp browserinterface.cpp mainwindow.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents mainwindow.h browserinterface.h $(DISTDIR)/
+	$(COPY_FILE) --parents main.cpp browserinterface.cpp mainwindow.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents mainwindow.ui $(DISTDIR)/
 
 
@@ -901,9 +895,9 @@ compiler_moc_predefs_clean:
 moc_predefs.h: ../../../../Qt/6.7.3/gcc_64/mkspecs/features/data/dummy.cpp
 	g++ -pipe -O2 -std=gnu++1z -Wall -Wextra -fPIC -dM -E -o moc_predefs.h ../../../../Qt/6.7.3/gcc_64/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_mainwindow.cpp moc_bridge.cpp moc_browserinterface.cpp
+compiler_moc_header_make_all: moc_mainwindow.cpp moc_browserinterface.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_mainwindow.cpp moc_bridge.cpp moc_browserinterface.cpp
+	-$(DEL_FILE) moc_mainwindow.cpp moc_browserinterface.cpp
 moc_mainwindow.cpp: mainwindow.h \
 		../../../../Qt/6.7.3/gcc_64/include/QtWidgets/QMainWindow \
 		../../../../Qt/6.7.3/gcc_64/include/QtWidgets/qmainwindow.h \
@@ -1185,112 +1179,6 @@ moc_mainwindow.cpp: mainwindow.h \
 		moc_predefs.h \
 		../../../../Qt/6.7.3/gcc_64/libexec/moc
 	/home/bulipe/Qt/6.7.3/gcc_64/libexec/moc $(DEFINES) --include /home/bulipe/Documents/BulipeTask/mridul/WebBrowser_9July/moc_predefs.h -I/home/bulipe/Qt/6.7.3/gcc_64/mkspecs/linux-g++ -I/home/bulipe/Documents/BulipeTask/mridul/WebBrowser_9July -I/home/bulipe/Qt/6.7.3/gcc_64/include -I/home/bulipe/Qt/6.7.3/gcc_64/include/QtWebEngineWidgets -I/home/bulipe/Qt/6.7.3/gcc_64/include/QtPrintSupport -I/home/bulipe/Qt/6.7.3/gcc_64/include/QtWidgets -I/home/bulipe/Qt/6.7.3/gcc_64/include/QtWebEngineCore -I/home/bulipe/Qt/6.7.3/gcc_64/include/QtQuick -I/home/bulipe/Qt/6.7.3/gcc_64/include/QtOpenGL -I/home/bulipe/Qt/6.7.3/gcc_64/include/QtGui -I/home/bulipe/Qt/6.7.3/gcc_64/include/QtQmlModels -I/home/bulipe/Qt/6.7.3/gcc_64/include/QtWebChannel -I/home/bulipe/Qt/6.7.3/gcc_64/include/QtQml -I/home/bulipe/Qt/6.7.3/gcc_64/include/QtNetwork -I/home/bulipe/Qt/6.7.3/gcc_64/include/QtQmlIntegration -I/home/bulipe/Qt/6.7.3/gcc_64/include/QtPositioning -I/home/bulipe/Qt/6.7.3/gcc_64/include/QtCore -I/usr/include/c++/13 -I/usr/include/x86_64-linux-gnu/c++/13 -I/usr/include/c++/13/backward -I/usr/lib/gcc/x86_64-linux-gnu/13/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include mainwindow.h -o moc_mainwindow.cpp
-
-moc_bridge.cpp: bridge.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/QObject \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qobject.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qobjectdefs.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qnamespace.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qglobal.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qtversionchecks.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qtconfiginclude.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qconfig.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qtcore-config.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qtconfigmacros.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qtcoreexports.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qcompilerdetection.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qprocessordetection.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qsystemdetection.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qtdeprecationmarkers.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qtpreprocessorsupport.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qassert.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qtnoop.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qtypes.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qtversion.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qtclasshelpermacros.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qtypeinfo.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qcontainerfwd.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qsysinfo.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qlogging.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qflags.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qcompare_impl.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qatomic.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qbasicatomic.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qatomic_cxx11.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qgenericatomic.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qyieldcpu.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qconstructormacros.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qdarwinhelpers.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qexceptionhandling.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qforeach.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qttypetraits.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qfunctionpointer.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qglobalstatic.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qmalloc.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qminmax.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qnumeric.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qoverload.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qswap.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qtenvironmentvariables.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qtresource.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qttranslation.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qversiontagging.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qtmetamacros.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qobjectdefs_impl.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qfunctionaltools_impl.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qstring.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qchar.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qstringview.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qbytearray.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qrefcount.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qarraydata.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qpair.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qarraydatapointer.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qarraydataops.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qcontainertools_impl.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qxptype_traits.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/q20type_traits.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/q20functional.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/q20memory.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qbytearrayalgorithms.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qbytearrayview.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qstringfwd.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qstringliteral.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qstringalgorithms.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qlatin1stringview.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qanystringview.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qutf8stringview.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qstringtokenizer.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qstringbuilder.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qstringconverter.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qstringconverter_base.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qlist.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qhashfunctions.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qiterator.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qbytearraylist.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qstringlist.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qalgorithms.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qstringmatcher.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qcoreevent.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qscopedpointer.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qmetatype.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qcompare.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qcomparehelpers.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qdatastream.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qiodevicebase.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qfloat16.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qmath.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qiterable.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qmetacontainer.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qcontainerinfo.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qtaggedpointer.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qscopeguard.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qobject_impl.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qbindingstorage.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/QString \
-		moc_predefs.h \
-		../../../../Qt/6.7.3/gcc_64/libexec/moc
-	/home/bulipe/Qt/6.7.3/gcc_64/libexec/moc $(DEFINES) --include /home/bulipe/Documents/BulipeTask/mridul/WebBrowser_9July/moc_predefs.h -I/home/bulipe/Qt/6.7.3/gcc_64/mkspecs/linux-g++ -I/home/bulipe/Documents/BulipeTask/mridul/WebBrowser_9July -I/home/bulipe/Qt/6.7.3/gcc_64/include -I/home/bulipe/Qt/6.7.3/gcc_64/include/QtWebEngineWidgets -I/home/bulipe/Qt/6.7.3/gcc_64/include/QtPrintSupport -I/home/bulipe/Qt/6.7.3/gcc_64/include/QtWidgets -I/home/bulipe/Qt/6.7.3/gcc_64/include/QtWebEngineCore -I/home/bulipe/Qt/6.7.3/gcc_64/include/QtQuick -I/home/bulipe/Qt/6.7.3/gcc_64/include/QtOpenGL -I/home/bulipe/Qt/6.7.3/gcc_64/include/QtGui -I/home/bulipe/Qt/6.7.3/gcc_64/include/QtQmlModels -I/home/bulipe/Qt/6.7.3/gcc_64/include/QtWebChannel -I/home/bulipe/Qt/6.7.3/gcc_64/include/QtQml -I/home/bulipe/Qt/6.7.3/gcc_64/include/QtNetwork -I/home/bulipe/Qt/6.7.3/gcc_64/include/QtQmlIntegration -I/home/bulipe/Qt/6.7.3/gcc_64/include/QtPositioning -I/home/bulipe/Qt/6.7.3/gcc_64/include/QtCore -I/usr/include/c++/13 -I/usr/include/x86_64-linux-gnu/c++/13 -I/usr/include/c++/13/backward -I/usr/lib/gcc/x86_64-linux-gnu/13/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include bridge.h -o moc_bridge.cpp
 
 moc_browserinterface.cpp: browserinterface.h \
 		../../../../Qt/6.7.3/gcc_64/include/QtCore/QObject \
@@ -1699,122 +1587,6 @@ main.o: main.cpp mainwindow.h \
 		../../../../Qt/6.7.3/gcc_64/include/QtWidgets/QApplication \
 		../../../../Qt/6.7.3/gcc_64/include/QtWidgets/qapplication.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
-
-bridge.o: bridge.cpp bridge.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/QObject \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qobject.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qobjectdefs.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qnamespace.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qglobal.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qtversionchecks.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qtconfiginclude.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qconfig.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qtcore-config.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qtconfigmacros.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qtcoreexports.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qcompilerdetection.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qprocessordetection.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qsystemdetection.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qtdeprecationmarkers.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qtpreprocessorsupport.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qassert.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qtnoop.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qtypes.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qtversion.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qtclasshelpermacros.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qtypeinfo.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qcontainerfwd.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qsysinfo.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qlogging.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qflags.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qcompare_impl.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qatomic.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qbasicatomic.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qatomic_cxx11.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qgenericatomic.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qyieldcpu.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qconstructormacros.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qdarwinhelpers.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qexceptionhandling.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qforeach.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qttypetraits.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qfunctionpointer.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qglobalstatic.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qmalloc.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qminmax.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qnumeric.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qoverload.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qswap.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qtenvironmentvariables.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qtresource.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qttranslation.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qversiontagging.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qtmetamacros.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qobjectdefs_impl.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qfunctionaltools_impl.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qstring.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qchar.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qstringview.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qbytearray.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qrefcount.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qarraydata.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qpair.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qarraydatapointer.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qarraydataops.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qcontainertools_impl.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qxptype_traits.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/q20type_traits.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/q20functional.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/q20memory.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qbytearrayalgorithms.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qbytearrayview.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qstringfwd.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qstringliteral.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qstringalgorithms.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qlatin1stringview.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qanystringview.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qutf8stringview.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qstringtokenizer.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qstringbuilder.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qstringconverter.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qstringconverter_base.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qlist.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qhashfunctions.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qiterator.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qbytearraylist.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qstringlist.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qalgorithms.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qstringmatcher.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qcoreevent.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qscopedpointer.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qmetatype.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qcompare.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qcomparehelpers.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qdatastream.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qiodevicebase.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qfloat16.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qmath.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qiterable.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qmetacontainer.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qcontainerinfo.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qtaggedpointer.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qscopeguard.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qobject_impl.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qbindingstorage.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/QString \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/QDebug \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qdebug.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qtextstream.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qcontiguouscache.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qsharedpointer.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qshareddata.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qsharedpointer_impl.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qmap.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qshareddata_impl.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qset.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qhash.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/qvarlengtharray.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o bridge.o bridge.cpp
 
 browserinterface.o: browserinterface.cpp browserinterface.h \
 		../../../../Qt/6.7.3/gcc_64/include/QtCore/QObject \
@@ -2382,9 +2154,7 @@ mainwindow.o: mainwindow.cpp mainwindow.h \
 		../../../../Qt/6.7.3/gcc_64/include/QtWidgets/QHBoxLayout \
 		../../../../Qt/6.7.3/gcc_64/include/QtWidgets/QToolButton \
 		../../../../Qt/6.7.3/gcc_64/include/QtWidgets/qtoolbutton.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/QDebug \
-		bridge.h \
-		../../../../Qt/6.7.3/gcc_64/include/QtCore/QString
+		../../../../Qt/6.7.3/gcc_64/include/QtCore/QDebug
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o mainwindow.cpp
 
 qrc_resources.o: qrc_resources.cpp 
@@ -2392,9 +2162,6 @@ qrc_resources.o: qrc_resources.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
-
-moc_bridge.o: moc_bridge.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_bridge.o moc_bridge.cpp
 
 moc_browserinterface.o: moc_browserinterface.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_browserinterface.o moc_browserinterface.cpp

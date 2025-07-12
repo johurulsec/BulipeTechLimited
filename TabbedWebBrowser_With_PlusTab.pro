@@ -9,11 +9,9 @@ TARGET = sample-webBrowser_9July
 TEMPLATE = app
 
 SOURCES += main.cpp \
-    bridge.cpp \
     browserinterface.cpp \
     mainwindow.cpp
 HEADERS += mainwindow.h \
-    bridge.h \
     browserinterface.h
 FORMS += mainwindow.ui
 

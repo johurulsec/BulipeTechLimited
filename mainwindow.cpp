@@ -4,7 +4,7 @@
 #include <QToolButton>
 #include <QDebug>
 
-#include "bridge.h"
+//#include "bridge.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent) {
@@ -397,8 +397,8 @@ void MainWindow::addToHistory(const QUrl &url) {
 //         QAction *action = new QAction(urlStr, this);
 //         connect(action, &QAction::triggered, this, [this, urlStr]() {
 //             QUrl url = QUrl::fromUserInput(urlStr);
-//             if (auto view = currentWebView()) {
-//                 view->load(url);
+//             if (auto  = currentWebView()) {
+//                 ->load(url);
 //             }
 //         });
 //         historyMenu->addAction(action);
