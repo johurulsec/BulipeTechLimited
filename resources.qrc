@@ -1,5 +1,7 @@
 <RCC>
-  <qresource prefix="/">
-    <file>html/home.html</file>    
-  </qresource>
+    <qresource prefix="/">
+        <file>html/home.html</file>
+        <file>html/style.css</file>
+        <file>Home.png</file>
+    </qresource>
 </RCC>

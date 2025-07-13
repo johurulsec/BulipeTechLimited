@@ -4,10 +4,10 @@
 #include <QToolButton>
 #include <QDebug>
 
-//#include "bridge.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent) {
+
 
     qDebug()<<"MW constructor";
 
@@ -70,7 +70,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     addNewTab(QUrl("qrc:/html/home.html")); // Start with 1 tab
 
-    setupHistoryDock();
+    //setupHistoryDock();
 
 }
 
@@ -379,10 +379,11 @@ void MainWindow::closeTab(int index) {
 
 
 void MainWindow::addToHistory(const QUrl &url) {
-    qDebug()<<"addToHistory()";
+    qDebug()<<"addToHistory(), history sz :"<<historyList.length()<<", url:"<<url.toString();
 
     QString urlStr = url.toString();
     if (!historyList.contains(urlStr)) {
+        qDebug()<<"yes, exist this url in history";
         historyList.prepend(urlStr); // Most recent on top
         if (historyList.size() > 50) historyList.removeLast(); // Limit size
         updateHistoryMenu();
@@ -410,9 +411,9 @@ void MainWindow::updateHistoryMenu() {
     qDebug()<<"updateHistoryMenu()";
 
     historyMenu->clear();
-    if (historyListWidget) {
-        historyListWidget->clear();
-    }
+    // if (historyListWidget) {
+    //     historyListWidget->clear();
+    // }
 
     for (const QString &urlStr : historyList) {
         QAction *action = new QAction(urlStr, this);
@@ -424,9 +425,9 @@ void MainWindow::updateHistoryMenu() {
         });
         historyMenu->addAction(action);
 
-        if (historyListWidget) {
-            historyListWidget->addItem(urlStr);
-        }
+        // if (historyListWidget) {
+        //     historyListWidget->addItem(urlStr);
+        // }
     }
 
     historyMenu->addSeparator();

@@ -4,7 +4,7 @@ CONFIG += c++17
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = sample-webBrowser_9July
+TARGET = webBrowser_July
 
 TEMPLATE = app
 
