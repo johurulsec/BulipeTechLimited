@@ -75,6 +75,12 @@ export default function BasicTabs() {
         const newIndex = tabs.length;
         setTabs((prev) => [...prev, { url: "" }]);
         setValue(newIndex);
+
+        // // Trigger native contentView to show blank or home page
+        // if (window.bridge && window.bridge.requestLoadUrl) {
+        //     window.bridge.requestLoadUrl("");  // Or use "about:blank"
+        // }
+
     };
 
     const handleCloseTab = (indexToClose) => {

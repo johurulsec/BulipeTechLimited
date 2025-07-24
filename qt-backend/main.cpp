@@ -5,13 +5,18 @@
 #include <QVBoxLayout>
 #include "bridge.h"
 #include <QScreen>
+#include<QResizeEvent>
 QWebEngineView* contentView = nullptr;
+
+#include "mainwindow.h"
 
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
 
-    QWidget mainWindow;
-    mainWindow.setWindowFlags(Qt::FramelessWindowHint);
+    // QWidget mainWindow;
+    // mainWindow.setWindowFlags(Qt::FramelessWindowHint);
+
+    MainWindow mainWindow;
 
     QScreen* screen = QGuiApplication::primaryScreen();
     QRect screenGeometry = screen->availableGeometry();
@@ -21,36 +26,30 @@ int main(int argc, char *argv[]) {
     // React UI WebEngineView
     QWebEngineView* reactView = new QWebEngineView(&mainWindow);
     reactView->resize(mainWindow.size());
-    // reactView->resize(1200, 800);
     reactView->show();
 
     // Web page content view (separate)
     contentView = new QWebEngineView(&mainWindow);
     contentView->setStyleSheet("background: white;");
     contentView->setVisible(false); // Initially hidden
-    // contentView->setVisible(true); // test purpose
+
+    mainWindow.setReactView(reactView);
+    mainWindow.setContentView(contentView);
 
     // QWebChannel setup
     QWebChannel* channel = new QWebChannel();
     Bridge* bridge = new Bridge();
 
-
-
     channel->registerObject(QStringLiteral("bridge"), bridge);
     reactView->page()->setWebChannel(channel);
 
     reactView->setUrl(QUrl("https://qt-web-app.surge.sh/")); // Your React build
+    // reactView->setUrl(QUrl("https://qt-web-app2.surge.sh/"));
+    // reactView->setUrl(QUrl("http://localhost:5173/"));
 
     QObject::connect(bridge, &Bridge::requestMinimize, [&mainWindow]() {
         mainWindow.showMinimized();
     });
-
-    // QObject::connect(bridge, &Bridge::requestMaximize, [&mainWindow]() {
-    //     if (mainWindow.isMaximized())
-    //         mainWindow.showNormal();
-    //     else
-    //         mainWindow.showMaximized();
-    // });
 
     QObject::connect(bridge, &Bridge::requestMaximize, [&mainWindow]() {
         if (mainWindow.isMaximized())
@@ -63,10 +62,14 @@ int main(int argc, char *argv[]) {
         mainWindow.close();
     });
 
-    // 🌐 Load real web content in contentView
+    // Load real web content in contentView
     QObject::connect(bridge, &Bridge::requestLoadUrl, [=](const QString& url) {
         QUrl qurl = QUrl::fromUserInput(url);
-        if (!qurl.isValid()) return;
+        if (!qurl.isValid() || url.isEmpty()) {
+            contentView->setVisible(false);
+            qDebug()<<"Empty or invalid url detected"<<qurl;
+            return;
+        }
 
         contentView->setUrl(qurl);
         contentView->setVisible(true);
@@ -99,9 +102,8 @@ int main(int argc, char *argv[]) {
 
     QObject::connect(reactView, &QWebEngineView::titleChanged, bridge, &Bridge::updateTitle);
 
-    // Re-position webview on resize
-
-
     mainWindow.show();
+
     return app.exec();
 }
+

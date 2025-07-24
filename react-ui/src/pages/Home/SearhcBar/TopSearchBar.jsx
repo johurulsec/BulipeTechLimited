@@ -24,7 +24,7 @@ const TopSearchBar = () => {
     return (
         <div className="searchBar">
             <TextField
-                placeholder="Search or enter address"
+                placeholder="Search with Google or Enter address"
                 variant="outlined"
                 size="small"
                 sx={{ width: "300px" }}

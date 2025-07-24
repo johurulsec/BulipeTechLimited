@@ -13,11 +13,14 @@ void Bridge::log(const QString &message)
 
 void Bridge::showAlert(const QString &message)
 {
+    qDebug()<<"showAlert()";
+
     QMessageBox::information(nullptr, "Alert from JS", message);
 }
 
 void Bridge::closeWindow()
 {
+    qDebug()<<"closeWindow()";
     emit requestClose();
 }
 void Bridge::minimizeWindow()
