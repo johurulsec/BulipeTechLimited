@@ -36,6 +36,7 @@ export default function BasicTabs() {
     const [tabs, setTabs] = useState([{ url: "" }]);
     const [value, setValue] = useState(0);
 
+
     React.useEffect(() => {
         if (typeof QWebChannel === "undefined") {
             console.error(
@@ -57,9 +58,12 @@ export default function BasicTabs() {
         });
     }, [value, setTabs]);
 
+
     const handleLoadUrl = (url) => {
         setTabs((prev) =>
-            prev.map((tab, i) => (i === value ? { ...tab, url } : tab))
+            prev.map((tab, i) =>
+                i === value ? { ...tab, url } : tab
+            )
         );
     };
 
@@ -75,12 +79,6 @@ export default function BasicTabs() {
         const newIndex = tabs.length;
         setTabs((prev) => [...prev, { url: "" }]);
         setValue(newIndex);
-
-        // // Trigger native contentView to show blank or home page
-        // if (window.bridge && window.bridge.requestLoadUrl) {
-        //     window.bridge.requestLoadUrl("");  // Or use "about:blank"
-        // }
-
     };
 
     const handleCloseTab = (indexToClose) => {
@@ -118,24 +116,13 @@ export default function BasicTabs() {
                         <Tab
                             key={index}
                             label={
-                                <Box
-                                    sx={{
-                                        display: "flex",
-                                        alignItems: "center",
-                                    }}
-                                >
+                                <Box sx={{ display: "flex", alignItems: "center" }}>
                                     <img
                                         src={logo}
                                         alt="logo"
-                                        style={{
-                                            width: 20,
-                                            height: 20,
-                                            marginRight: 6,
-                                        }}
+                                        style={{ width: 20, height: 20, marginRight: 6 }}
                                     />
-                                    <span style={{ fontSize: "0.75rem" }}>
-                                        New Tab
-                                    </span>
+                                    <span style={{ fontSize: "0.75rem" }}>New Tab</span>
                                     <Box
                                         component="span"
                                         onClick={(e) => {
@@ -170,7 +157,7 @@ export default function BasicTabs() {
 
             {tabs.map((tab, index) => (
                 <CustomTabPanel key={index} value={value} index={index}>
-                    {!tab.url && <Home />}
+                    <Home url={tab.url} onLoadUrl={handleLoadUrl}/>
                 </CustomTabPanel>
             ))}
         </Box>

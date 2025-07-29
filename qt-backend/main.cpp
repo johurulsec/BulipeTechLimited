@@ -6,15 +6,13 @@
 #include "bridge.h"
 #include <QScreen>
 #include<QResizeEvent>
+#include<QWebEngineProfile>
 QWebEngineView* contentView = nullptr;
 
 #include "mainwindow.h"
 
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
-
-    // QWidget mainWindow;
-    // mainWindow.setWindowFlags(Qt::FramelessWindowHint);
 
     MainWindow mainWindow;
 
@@ -43,9 +41,13 @@ int main(int argc, char *argv[]) {
     channel->registerObject(QStringLiteral("bridge"), bridge);
     reactView->page()->setWebChannel(channel);
 
-    reactView->setUrl(QUrl("https://qt-web-app.surge.sh/")); // Your React build
+    // QWebEngineProfile *profile;
+    // profile->setHttpUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+    //                           "(KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36");
+
+    // reactView->setUrl(QUrl("https://qt-web-app.surge.sh/")); // React build
     // reactView->setUrl(QUrl("https://qt-web-app2.surge.sh/"));
-    // reactView->setUrl(QUrl("http://localhost:5173/"));
+    reactView->setUrl(QUrl("http://localhost:5173/"));// React build
 
     QObject::connect(bridge, &Bridge::requestMinimize, [&mainWindow]() {
         mainWindow.showMinimized();
@@ -70,6 +72,12 @@ int main(int argc, char *argv[]) {
             qDebug()<<"Empty or invalid url detected"<<qurl;
             return;
         }
+
+        // // Set user agent
+        // contentView->page()->profile()->setHttpUserAgent(
+        //     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+        //     "(KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
+        //     );
 
         contentView->setUrl(qurl);
         contentView->setVisible(true);

@@ -55,38 +55,24 @@
 // export default ToolBar;
 
 import Toolbar from "@mui/material/Toolbar";
-import SearchBar from "../pages/Home/SearhcBar/TopSearchBar";
+import SearchBar from "../pages/Home/SearhcBar/SearchBar";
 import { useState } from "react";
-import { Box, Button, IconButton, TextField } from "@mui/material";
+import { Box, Button, IconButton, TextField, InputAdornment } from "@mui/material";
 import { IoMdArrowBack, IoMdArrowForward } from "react-icons/io";
 import { IoReload } from "react-icons/io5";
+import { MdSearch } from "react-icons/md";
 
 const ToolBar = ({ onLoadUrl }) => {
     const [inputUrl, setInputUrl] = useState("");
 
     const handleKeyDown = (e) => {
-        // if (e.key === "Enter") {
-        //     let formatted = inputUrl.trim();
-        //     if (!formatted.startsWith("http")) {
-        //         formatted = "https://" + formatted;
-        //     }
-        //     onLoadUrl(formatted); // pass to App
-        //     setInputUrl(""); // clear input
-        // }
-
         if (e.key === "Enter") {
-            if (window.bridge?.loadUrl) {
-                let formatted = inputUrl.trim();
-
-                // If not a valid URL, prepend https://
-                if (!formatted.startsWith("http")) {
-                    formatted = "https://" + formatted;
-                }
-
-                window.bridge.loadUrl(formatted);
-            } else {
-                console.warn("window.bridge.loadUrl not available");
+            let formatted = inputUrl.trim();
+            if (!formatted.startsWith("http")) {
+                formatted = "https://" + formatted;
             }
+            onLoadUrl(formatted); // pass to App
+            setInputUrl(""); // clear input
         }
     };
 
@@ -113,14 +99,29 @@ const ToolBar = ({ onLoadUrl }) => {
                 </IconButton>
             </Box>
             <TextField
-                placeholder="Search or enter address"
+                placeholder="enter address..."
                 variant="outlined"
                 size="small"
-                sx={{ width: "300px" }}
+                fullWidth
+                sx={{
+                    width: {
+                        xs: "100%", // mobile
+                        sm: "400px", // small screens
+                        md: "500px", // medium+
+                    },
+                }}
+                InputProps={{
+                    startAdornment: (
+                        <InputAdornment position="start">
+                            <MdSearch />
+                        </InputAdornment>
+                    ),
+                }}
                 value={inputUrl}
                 onChange={(e) => setInputUrl(e.target.value)}
                 onKeyDown={handleKeyDown}
             />
+            
             <Button variant="contained" sx={{ px: 5 }}>
                 Menus
             </Button>
