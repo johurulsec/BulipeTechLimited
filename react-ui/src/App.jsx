@@ -51,10 +51,14 @@ export default function BasicTabs() {
           setBridgeReady(true);
 
           // Handle title updates
-          console.log("before if() cond, Handle title updates, useEffect() of app.jsx");
+          console.log(
+            "before if() cond, Handle title updates, webchannel useEffect() of app.jsx"
+          );
 
           if (window.bridge.updateTitle) {
-            console.log("window.bridge.updateTitle, useEffect() of app.jsx");
+            console.log(
+              "window.bridge.updateTitle, webchannel useEffect() of app.jsx"
+            );
 
             window.bridge.updateTitle.connect((title) => {
               setTabs((prevTabs) =>
@@ -77,13 +81,18 @@ export default function BasicTabs() {
   useEffect(() => {
     //-------------------------------- start
     const currentTab = tabs[value];
-    
+
     if (!bridgeReady || !window.bridge || !currentTab) {
-      console.log("!bridgeReady || !window.bridge || !currentTab");
+      console.log(
+        "!bridgeReady || !window.bridge || !currentTab of loadUrl useEffect() of app.jsx"
+      );
       return;
     }
     const url = currentTab.url || "";
-    console.log("Loading URL for current tab, another useEffect() of app.jsx:", url);
+    console.log(
+      "Loading URL for current tab, loadUrl useEffect() of app.jsx:",
+      url
+    );
 
     window.bridge.loadUrl(url);
 
@@ -111,8 +120,13 @@ export default function BasicTabs() {
     console.log("handleLoadUrl() of app.jsx");
 
     // Update current tab's url
+    // setTabs((prev) =>
+    //   prev.map((tab, i) => (i === value ? { ...tab, url } : tab))
+    // );
+
+    // Update current tab's url AND label
     setTabs((prev) =>
-      prev.map((tab, i) => (i === value ? { ...tab, url } : tab))
+      prev.map((tab, i) => (i === value ? { ...tab, url, label: url } : tab))
     );
 
     // setTabs((prev) =>
@@ -121,7 +135,7 @@ export default function BasicTabs() {
 
     // Load immediately to Qt
     if (bridgeReady && window.bridge?.loadUrl) {
-      console.log("Load immediately to Qt");
+      console.log("Load immediately to Qt of app.jsx");
 
       window.bridge.loadUrl(url);
     }

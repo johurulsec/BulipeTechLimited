@@ -71,7 +71,7 @@ const ToolBar = ({ onLoadUrl }) => {
 
         if (e.key === "Enter") {            
             let formatted = inputUrl.trim();
-            console.log("before fomated-url of toolBar.jsx", formatted);
+            console.log("before fomated-url of toolBar.jsx user-input:", formatted);
 
             if (!formatted.startsWith("http")) {
                 formatted = "https://" + formatted;
