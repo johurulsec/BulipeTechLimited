@@ -46,7 +46,7 @@ void Bridge::receiveFromReact(const QString &param1, const QString &param2) {
 
 void Bridge::loadUrl(const QString &url)
 {
-    qDebug() << "[JS] Request to load URL:" << url;
+    qDebug() << "[JS] Request to load URL of bridge.cpp :" << url;
     emit requestLoadUrl(url);
 }
 

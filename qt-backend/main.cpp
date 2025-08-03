@@ -71,15 +71,15 @@ int main(int argc, char *argv[]) {
 
     // Load real web content in contentView
     QObject::connect(bridge, &Bridge::requestLoadUrl, [=](const QString& url) {
-        qDebug() << "Received URL request:" << url;
+        qDebug() << "Received URL request of main.cpp :" << url;
 
         QUrl qurl = QUrl::fromUserInput(url);
         if (!qurl.isValid() || url.isEmpty()) {
             contentView->setVisible(false);
-            qDebug()<<"Empty or invalid url detected"<<qurl;
+            qDebug()<<"Empty or invalid url detected of main.cpp class! so return"<<qurl;
             return;
         }else{
-            qDebug()<<"valid url:"<<qurl.toString();
+            qDebug()<<"valid url of main.cpp :"<<qurl.toString();
         }
 
         // // Set user agent
@@ -113,11 +113,11 @@ int main(int argc, char *argv[]) {
             })()
         )", [=](const QVariant &result) {                                             
                                              if (!result.isValid()){
-                                                 qDebug() << "Failed to get slot position from React.";
+                                                 qDebug() << "Failed to get slot position from React of main.cpp. so return";
                                                  return;
                                              }
                                              QVariantMap rect = result.toMap();
-                                             qDebug() << "Webview slot position:" << rect;
+                                             qDebug() << "Webview slot position main.cpp :" << rect;
 
                                              int x = rect["left"].toInt();
                                              int y = rect["top"].toInt();
