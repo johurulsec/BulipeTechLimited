@@ -54,6 +54,7 @@
 
 // export default ToolBar;
 
+//ToolBar.jsx
 import Toolbar from "@mui/material/Toolbar";
 import SearchBar from "../pages/Home/SearhcBar/SearchBar";
 import { useState } from "react";
@@ -66,11 +67,17 @@ const ToolBar = ({ onLoadUrl }) => {
     const [inputUrl, setInputUrl] = useState("");
 
     const handleKeyDown = (e) => {
-        if (e.key === "Enter") {
+        console.log("handleKeyDown() of toolBar.jsx");
+
+        if (e.key === "Enter") {            
             let formatted = inputUrl.trim();
+            console.log("before fomated-url of toolBar.jsx", formatted);
+
             if (!formatted.startsWith("http")) {
                 formatted = "https://" + formatted;
             }
+            console.log("after fomatted-url of toolBar.jsx:", formatted);
+
             onLoadUrl(formatted); // pass to App
             setInputUrl(""); // clear input
         }
@@ -128,5 +135,4 @@ const ToolBar = ({ onLoadUrl }) => {
         </Toolbar>
     );
 };
-
 export default ToolBar;

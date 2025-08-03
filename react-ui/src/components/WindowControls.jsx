@@ -7,16 +7,22 @@ import Box from "@mui/material/Box";
 
 export default function WindowControls() {
 	const handleMinimize = () => {
+		console.log("handleMinimize() of windowControls.jsx");
+
 		window.bridge?.minimizeWindow?.();
 		console.log("qt fn: ",window.bridge?.minimizeWindow?.());
 		
 	};
 
 	const handleMaximize = () => {
+		console.log("handleMaximize() of windowControls.jsx");
+
 		window.bridge?.maximizeWindow?.();
 	};
 
 	const handleClose = () => {
+		console.log("handleClose() of windowControls.jsx");
+
 		window.bridge?.closeWindow?.();
 	};
 

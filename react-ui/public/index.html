@@ -1,19 +1,22 @@
 <!-- index.html -->
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" href="./icon.svg" />
-
-    <!-- ✅ MUST use Qt's qrc path -->
-    <script src="qrc:///qtwebchannel/qwebchannel.js"></script>
-
+	<!-- <script src="qrc:///qtwebchannel/qwebchannel.js"></script> -->
+    <script src="qwebchannel.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Nicdora</title>
+
+    <!-- ✅ Use proper path to CSS -->
     <link rel="stylesheet" href="/src/index.css" />
   </head>
   <body>
     <div id="root"></div>
+
+    <!-- ✅ Let Vite resolve modules -->
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

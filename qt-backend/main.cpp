@@ -1,3 +1,4 @@
+//main.cpp
 #include <QApplication>
 #include <QWidget>
 #include <QWebEngineView>
@@ -10,6 +11,7 @@
 QWebEngineView* contentView = nullptr;
 
 #include "mainwindow.h"
+#include<QWebEngineSettings>
 
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
@@ -41,9 +43,12 @@ int main(int argc, char *argv[]) {
     channel->registerObject(QStringLiteral("bridge"), bridge);
     reactView->page()->setWebChannel(channel);
 
-    // QWebEngineProfile *profile;
-    // profile->setHttpUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
-    //                           "(KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36");
+    QObject::connect(reactView, &QWebEngineView::loadFinished, [](bool ok) {
+        if (ok)
+            qDebug() << "React UI loaded";
+        else
+            qDebug() << "Failed to load React UI";
+    });
 
     // reactView->setUrl(QUrl("https://qt-web-app.surge.sh/")); // React build
     // reactView->setUrl(QUrl("https://qt-web-app2.surge.sh/"));
@@ -66,18 +71,29 @@ int main(int argc, char *argv[]) {
 
     // Load real web content in contentView
     QObject::connect(bridge, &Bridge::requestLoadUrl, [=](const QString& url) {
+        qDebug() << "Received URL request:" << url;
+
         QUrl qurl = QUrl::fromUserInput(url);
         if (!qurl.isValid() || url.isEmpty()) {
             contentView->setVisible(false);
             qDebug()<<"Empty or invalid url detected"<<qurl;
             return;
+        }else{
+            qDebug()<<"valid url:"<<qurl.toString();
         }
 
         // // Set user agent
         // contentView->page()->profile()->setHttpUserAgent(
         //     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
-        //     "(KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
+        //     "(KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36 Edg/119.0.0.0"
         //     );
+
+        // // Enable all necessary features
+        // QWebEngineSettings* settings = contentView->page()->settings();
+        // settings->setAttribute(QWebEngineSettings::JavascriptEnabled, true);
+        // settings->setAttribute(QWebEngineSettings::LocalStorageEnabled, true);
+        // settings->setAttribute(QWebEngineSettings::PluginsEnabled, true);
+        // settings->setAttribute(QWebEngineSettings::WebAttribute::AllowRunningInsecureContent, true);
 
         contentView->setUrl(qurl);
         contentView->setVisible(true);
@@ -95,9 +111,14 @@ int main(int argc, char *argv[]) {
                     height: rect.height
                 };
             })()
-        )", [=](const QVariant &result) {
-                                             if (!result.isValid()) return;
+        )", [=](const QVariant &result) {                                             
+                                             if (!result.isValid()){
+                                                 qDebug() << "Failed to get slot position from React.";
+                                                 return;
+                                             }
                                              QVariantMap rect = result.toMap();
+                                             qDebug() << "Webview slot position:" << rect;
+
                                              int x = rect["left"].toInt();
                                              int y = rect["top"].toInt();
                                              int width = rect["width"].toInt();

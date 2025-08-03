@@ -1,3 +1,4 @@
+//bridge.cpp
 #include "bridge.h"
 Bridge::Bridge(QObject *parent)
     : QObject{parent}
@@ -23,6 +24,7 @@ void Bridge::closeWindow()
     qDebug()<<"closeWindow()";
     emit requestClose();
 }
+
 void Bridge::minimizeWindow()
 {
     qDebug()<<"minimizeWindow()";

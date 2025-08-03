@@ -12,5 +12,7 @@ SOURCES += main.cpp \
     mainwindow.cpp
 
 HEADERS += bridge.h \
-    bridge.h \
     mainwindow.h
+
+RESOURCES += resources.qrc
+
