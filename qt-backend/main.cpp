@@ -8,6 +8,7 @@
 #include <QScreen>
 #include<QResizeEvent>
 #include<QWebEngineProfile>
+
 QWebEngineView* contentView = nullptr;
 
 #include "mainwindow.h"
@@ -16,6 +17,7 @@ QWebEngineView* contentView = nullptr;
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
 
+    qDebug()<<"main.cpp start ...";
     MainWindow mainWindow;
 
     QScreen* screen = QGuiApplication::primaryScreen();
@@ -41,13 +43,16 @@ int main(int argc, char *argv[]) {
     Bridge* bridge = new Bridge();
 
     channel->registerObject(QStringLiteral("bridge"), bridge);
-    reactView->page()->setWebChannel(channel);
+    reactView->page()->setWebChannel(channel);//webchannel setup
+
+    // for back, forward, reload purposes
+    bridge->setContentView(contentView);
 
     QObject::connect(reactView, &QWebEngineView::loadFinished, [](bool ok) {
         if (ok)
-            qDebug() << "React UI loaded";
+            qDebug() << "React UI loaded of main()";
         else
-            qDebug() << "Failed to load React UI";
+            qDebug() << "Failed to load React UI of main()";
     });
 
     // reactView->setUrl(QUrl("https://qt-web-app.surge.sh/")); // React build
@@ -59,10 +64,14 @@ int main(int argc, char *argv[]) {
     });
 
     QObject::connect(bridge, &Bridge::requestMaximize, [&mainWindow]() {
-        if (mainWindow.isMaximized())
+        if (mainWindow.isMaximized()){
+            qDebug()<<"isMaximized() showNormal() of main()";
             mainWindow.showNormal();
-        else
+        }
+        else{
+            qDebug()<<"isNormal() showMaximized of main()";
             mainWindow.showMaximized();
+        }
     });
 
     QObject::connect(bridge, &Bridge::requestClose, [&mainWindow]() {
@@ -82,7 +91,7 @@ int main(int argc, char *argv[]) {
             qDebug()<<"valid url of main.cpp :"<<qurl.toString();
         }
 
-        // // Set user agent
+        // // Set user agent for whatsapp-web but not work gemini-chatbot!
         // contentView->page()->profile()->setHttpUserAgent(
         //     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
         //     "(KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36 Edg/119.0.0.0"

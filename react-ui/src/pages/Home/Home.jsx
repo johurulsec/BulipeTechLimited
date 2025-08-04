@@ -4,24 +4,22 @@ import bgImage from "../../assets/Home.png";
 import logo from "../../assets/logo.png";
 
 const Home = ({ url, onLoadUrl }) => {
-    console.log("Home() of home.jsx");
-    
-    return (
-        <div
-            id="webview-slot" // critical ID for QWebEngineView positioning
-            style={{ backgroundImage: `url(${bgImage})`,}}
-            className="home bg-cover bg-center h-screen flex items-center justify-center"
-        >
-            {!url && (
-                <Box sx={{ mt: -20 }} className="flex flex-col items-center content">
-                    <img src={logo} alt="logo" />
-                </Box>
-                
-            )}
-        </div>
-    );
-};
+  console.log("Home() of home.jsx");
 
+  return (
+    <div
+      id="webview-slot" // critical ID for QWebEngineView positioning
+      style={{ backgroundImage: `url(${bgImage})` }}
+      className="home bg-cover bg-center h-screen flex items-center justify-center"
+    >
+      {!url && (
+        <Box sx={{ mt: -20 }} className="flex flex-col items-center content">
+          <img src={logo} alt="logo" />
+        </Box>
+      )}
+    </div>
+  );
+};
 export default Home;
 
 // import Shortcuts from "./Shortcuts/Shortcuts";
@@ -50,7 +48,7 @@ export default Home;
 //                         <Shortcuts />
 //                     </div> */}
 //                 </Box>
-//             )}            
+//             )}
 
 //         </div>
 //     );

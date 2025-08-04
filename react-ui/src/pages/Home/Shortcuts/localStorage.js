@@ -1,4 +1,6 @@
 export const getShortcuts = () => {
+	console.log("getShortcuts() of localStorage.js");
+
 	const data = localStorage.getItem("shortcuts");
 	return data ? JSON.parse(data) : [];
 };
@@ -6,6 +8,8 @@ export const getShortcuts = () => {
 
 // Extract domain from any user-entered URL
 const getDomain = (rawUrl) => {
+	console.log("getDomain() of localStorage.js");
+
 	try {
 		const urlObj = new URL(rawUrl.startsWith("http") ? rawUrl : `https://${rawUrl}`);
 		return urlObj.hostname;
@@ -17,6 +21,8 @@ const getDomain = (rawUrl) => {
 };
 
 export const saveShortcut = (shortcut) => {
+	console.log("saveShortcut() of localStorage.js");
+
 	const { name, url } = shortcut;
 	const domain = getDomain(url);
 	if (!domain) return;

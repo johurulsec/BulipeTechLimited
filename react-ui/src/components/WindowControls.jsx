@@ -10,18 +10,18 @@ export default function WindowControls() {
 		console.log("handleMinimize() of windowControls.jsx");
 
 		window.bridge?.minimizeWindow?.();
-		console.log("qt fn: ",window.bridge?.minimizeWindow?.());
+		console.log("Qt func of windowControls.jsx: ",window.bridge?.minimizeWindow?.());
 		
 	};
 
 	const handleMaximize = () => {
-		console.log("handleMaximize() of windowControls.jsx");
+		console.log("Qt func handleMaximize() of windowControls.jsx");
 
 		window.bridge?.maximizeWindow?.();
 	};
 
 	const handleClose = () => {
-		console.log("handleClose() of windowControls.jsx");
+		console.log("Qt func handleClose() of windowControls.jsx");
 
 		window.bridge?.closeWindow?.();
 	};

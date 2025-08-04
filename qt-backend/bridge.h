@@ -6,10 +6,20 @@
 #include <QString>
 #include <QDebug>
 #include <QMessageBox>
+
+#include <QWebEngineView>
+#include<QWebEngineHistory>
+
 class Bridge : public QObject {
     Q_OBJECT
 public:
     explicit Bridge(QObject *parent = nullptr);
+
+    void setContentView(QWebEngineView* view);
+
+    // Q_INVOKABLE void goBack();
+    // Q_INVOKABLE void goForward();
+    // Q_INVOKABLE void reload();
 
 public slots:
     void log(const QString &message);
@@ -20,7 +30,9 @@ public slots:
     void maximizeWindow();
     void receiveFromReact(const QString &param1, const QString &param2);
     void loadUrl(const QString &url);
-
+    void goBack();
+    void goForward();
+    void reload();
 
 signals:
     void notify(const QString &message);
@@ -31,6 +43,9 @@ signals:
     void requestLocalStorage();
     void requestLoadUrl(const QString &url);
     void updateTitle(const QString &title);
+
+private:
+    QWebEngineView* contentView = nullptr;
 
 };
 

@@ -58,7 +58,10 @@ template <> constexpr inline auto Bridge::qt_create_metaobjectdata<qt_meta_tag_Z
         "receiveFromReact",
         "param1",
         "param2",
-        "loadUrl"
+        "loadUrl",
+        "goBack",
+        "goForward",
+        "reload"
     };
 
     QtMocHelpers::UintData qt_methods {
@@ -104,6 +107,12 @@ template <> constexpr inline auto Bridge::qt_create_metaobjectdata<qt_meta_tag_Z
         QtMocHelpers::SlotData<void(const QString &)>(20, 2, QMC::AccessPublic, QMetaType::Void, {{
             { QMetaType::QString, 9 },
         }}),
+        // Method 'goBack'
+        QtMocHelpers::MethodData<void()>(21, 2, QMC::AccessPublic, QMetaType::Void),
+        // Method 'goForward'
+        QtMocHelpers::MethodData<void()>(22, 2, QMC::AccessPublic, QMetaType::Void),
+        // Method 'reload'
+        QtMocHelpers::MethodData<void()>(23, 2, QMC::AccessPublic, QMetaType::Void),
     };
     QtMocHelpers::UintData qt_properties {
     };
@@ -141,6 +150,9 @@ void Bridge::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         case 11: _t->maximizeWindow(); break;
         case 12: _t->receiveFromReact((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[2]))); break;
         case 13: _t->loadUrl((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
+        case 14: _t->goBack(); break;
+        case 15: _t->goForward(); break;
+        case 16: _t->reload(); break;
         default: ;
         }
     }
@@ -181,14 +193,14 @@ int Bridge::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 14)
+        if (_id < 17)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 14;
+        _id -= 17;
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 14)
+        if (_id < 17)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 14;
+        _id -= 17;
     }
     return _id;
 }

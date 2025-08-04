@@ -10,19 +10,20 @@ MainWindow::MainWindow(QWidget* parent)
 }
 
 void MainWindow::setReactView(QWebEngineView* view) {
-    qDebug()<<"setReactView()";
+    qDebug()<<"setReactView() mw";
     reactView = view;
 }
 
 void MainWindow::setContentView(QWebEngineView* view) {
-    qDebug()<<"setContentView()";
+    qDebug()<<"setContentView() mw";
     contentView = view;
 }
 
 void MainWindow::resizeEvent(QResizeEvent* event) {
-    qDebug()<<"resizeEvent()";
+    qDebug()<<"resizeEvent() mw";
 
     QWidget::resizeEvent(event);
     if (reactView) reactView->resize(size());
     if (contentView && contentView->isVisible()) contentView->resize(size()); // Optional
 }
+

@@ -97,23 +97,6 @@ export default function BasicTabs() {
     window.bridge.loadUrl(url);
 
     //-------------------------------- end
-    // if (!bridgeReady || !window.bridge) return;
-
-    // const currentTab = tabs[value];
-    // if (!currentTab || currentTab.loaded) return; // ✅ prevent reloading
-
-    // const url = currentTab.url || "";
-    // console.log("url = currentTab.url || empty :",url);
-
-    // if (url) {
-    //   console.log("Loading URL (first time) for tab:", value);
-    //   window.bridge.loadUrl(url);
-
-    //   // Mark as loaded
-    //   setTabs((prev) =>
-    //     prev.map((tab, i) => (i === value ? { ...tab, loaded: true } : tab))
-    //   );
-    // }
   }, [value, bridgeReady]);
 
   const handleLoadUrl = (url) => {

@@ -24,7 +24,7 @@
   };
 })();
 
-// ✅ Add more if you want full logging (optional)
+// Add more if you want full logging (optional)
 ["warn", "error"].forEach((level) => {
   const original = console[level];
   console[level] = function (...args) {
