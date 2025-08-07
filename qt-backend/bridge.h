@@ -17,10 +17,6 @@ public:
 
     void setContentView(QWebEngineView* view);
 
-    // Q_INVOKABLE void goBack();
-    // Q_INVOKABLE void goForward();
-    // Q_INVOKABLE void reload();
-
 public slots:
     void log(const QString &message);
     void showAlert(const QString &message);
@@ -34,6 +30,8 @@ public slots:
     void goForward();
     void reload();
 
+    void sendOpenInNewTab(const QString& url);
+
 signals:
     void notify(const QString &message);
     void requestClose();
@@ -44,9 +42,15 @@ signals:
     void requestLoadUrl(const QString &url);
     void updateTitle(const QString &title);
 
+    void openInNewTab(const QString& url);
+
 private:
     QWebEngineView* contentView = nullptr;
 
 };
 
 #endif // BRIDGE_H
+
+
+
+

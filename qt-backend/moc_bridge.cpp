@@ -50,6 +50,7 @@ template <> constexpr inline auto Bridge::qt_create_metaobjectdata<qt_meta_tag_Z
         "url",
         "updateTitle",
         "title",
+        "openInNewTab",
         "log",
         "showAlert",
         "closeWindow",
@@ -61,7 +62,8 @@ template <> constexpr inline auto Bridge::qt_create_metaobjectdata<qt_meta_tag_Z
         "loadUrl",
         "goBack",
         "goForward",
-        "reload"
+        "reload",
+        "sendOpenInNewTab"
     };
 
     QtMocHelpers::UintData qt_methods {
@@ -85,34 +87,42 @@ template <> constexpr inline auto Bridge::qt_create_metaobjectdata<qt_meta_tag_Z
         QtMocHelpers::SignalData<void(const QString &)>(10, 2, QMC::AccessPublic, QMetaType::Void, {{
             { QMetaType::QString, 11 },
         }}),
-        // Slot 'log'
-        QtMocHelpers::SlotData<void(const QString &)>(12, 2, QMC::AccessPublic, QMetaType::Void, {{
-            { QMetaType::QString, 3 },
+        // Signal 'openInNewTab'
+        QtMocHelpers::SignalData<void(const QString &)>(12, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { QMetaType::QString, 9 },
         }}),
-        // Slot 'showAlert'
+        // Slot 'log'
         QtMocHelpers::SlotData<void(const QString &)>(13, 2, QMC::AccessPublic, QMetaType::Void, {{
             { QMetaType::QString, 3 },
         }}),
+        // Slot 'showAlert'
+        QtMocHelpers::SlotData<void(const QString &)>(14, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { QMetaType::QString, 3 },
+        }}),
         // Slot 'closeWindow'
-        QtMocHelpers::SlotData<void()>(14, 2, QMC::AccessPublic, QMetaType::Void),
-        // Slot 'minimizeWindow'
         QtMocHelpers::SlotData<void()>(15, 2, QMC::AccessPublic, QMetaType::Void),
-        // Slot 'maximizeWindow'
+        // Slot 'minimizeWindow'
         QtMocHelpers::SlotData<void()>(16, 2, QMC::AccessPublic, QMetaType::Void),
+        // Slot 'maximizeWindow'
+        QtMocHelpers::SlotData<void()>(17, 2, QMC::AccessPublic, QMetaType::Void),
         // Slot 'receiveFromReact'
-        QtMocHelpers::SlotData<void(const QString &, const QString &)>(17, 2, QMC::AccessPublic, QMetaType::Void, {{
-            { QMetaType::QString, 18 }, { QMetaType::QString, 19 },
+        QtMocHelpers::SlotData<void(const QString &, const QString &)>(18, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { QMetaType::QString, 19 }, { QMetaType::QString, 20 },
         }}),
         // Slot 'loadUrl'
-        QtMocHelpers::SlotData<void(const QString &)>(20, 2, QMC::AccessPublic, QMetaType::Void, {{
+        QtMocHelpers::SlotData<void(const QString &)>(21, 2, QMC::AccessPublic, QMetaType::Void, {{
             { QMetaType::QString, 9 },
         }}),
-        // Method 'goBack'
-        QtMocHelpers::MethodData<void()>(21, 2, QMC::AccessPublic, QMetaType::Void),
-        // Method 'goForward'
-        QtMocHelpers::MethodData<void()>(22, 2, QMC::AccessPublic, QMetaType::Void),
-        // Method 'reload'
-        QtMocHelpers::MethodData<void()>(23, 2, QMC::AccessPublic, QMetaType::Void),
+        // Slot 'goBack'
+        QtMocHelpers::SlotData<void()>(22, 2, QMC::AccessPublic, QMetaType::Void),
+        // Slot 'goForward'
+        QtMocHelpers::SlotData<void()>(23, 2, QMC::AccessPublic, QMetaType::Void),
+        // Slot 'reload'
+        QtMocHelpers::SlotData<void()>(24, 2, QMC::AccessPublic, QMetaType::Void),
+        // Slot 'sendOpenInNewTab'
+        QtMocHelpers::SlotData<void(const QString &)>(25, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { QMetaType::QString, 9 },
+        }}),
     };
     QtMocHelpers::UintData qt_properties {
     };
@@ -143,16 +153,18 @@ void Bridge::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         case 4: _t->requestLocalStorage(); break;
         case 5: _t->requestLoadUrl((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
         case 6: _t->updateTitle((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
-        case 7: _t->log((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
-        case 8: _t->showAlert((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
-        case 9: _t->closeWindow(); break;
-        case 10: _t->minimizeWindow(); break;
-        case 11: _t->maximizeWindow(); break;
-        case 12: _t->receiveFromReact((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[2]))); break;
-        case 13: _t->loadUrl((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
-        case 14: _t->goBack(); break;
-        case 15: _t->goForward(); break;
-        case 16: _t->reload(); break;
+        case 7: _t->openInNewTab((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
+        case 8: _t->log((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
+        case 9: _t->showAlert((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
+        case 10: _t->closeWindow(); break;
+        case 11: _t->minimizeWindow(); break;
+        case 12: _t->maximizeWindow(); break;
+        case 13: _t->receiveFromReact((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[2]))); break;
+        case 14: _t->loadUrl((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
+        case 15: _t->goBack(); break;
+        case 16: _t->goForward(); break;
+        case 17: _t->reload(); break;
+        case 18: _t->sendOpenInNewTab((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
         default: ;
         }
     }
@@ -170,6 +182,8 @@ void Bridge::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         if (QtMocHelpers::indexOfMethod<void (Bridge::*)(const QString & )>(_a, &Bridge::requestLoadUrl, 5))
             return;
         if (QtMocHelpers::indexOfMethod<void (Bridge::*)(const QString & )>(_a, &Bridge::updateTitle, 6))
+            return;
+        if (QtMocHelpers::indexOfMethod<void (Bridge::*)(const QString & )>(_a, &Bridge::openInNewTab, 7))
             return;
     }
 }
@@ -193,14 +207,14 @@ int Bridge::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 17)
+        if (_id < 19)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 17;
+        _id -= 19;
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 17)
+        if (_id < 19)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 17;
+        _id -= 19;
     }
     return _id;
 }
@@ -245,5 +259,11 @@ void Bridge::requestLoadUrl(const QString & _t1)
 void Bridge::updateTitle(const QString & _t1)
 {
     QMetaObject::activate<void>(this, &staticMetaObject, 6, nullptr, _t1);
+}
+
+// SIGNAL 7
+void Bridge::openInNewTab(const QString & _t1)
+{
+    QMetaObject::activate<void>(this, &staticMetaObject, 7, nullptr, _t1);
 }
 QT_WARNING_POP

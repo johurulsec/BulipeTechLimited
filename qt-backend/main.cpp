@@ -13,6 +13,7 @@ QWebEngineView* contentView = nullptr;
 
 #include "mainwindow.h"
 #include<QWebEngineSettings>
+#include "custompage.h"
 
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
@@ -47,6 +48,19 @@ int main(int argc, char *argv[]) {
 
     // for back, forward, reload purposes
     bridge->setContentView(contentView);
+
+    // for custompage in newTab open
+    auto contentPage = new CustomPage(contentView);
+    contentView->setPage(contentPage);
+
+    QObject::connect(contentPage, &CustomPage::newTabRequested, [bridge](const QUrl& url) {
+        qDebug() << "New tab requested for URL:" << url;
+        // Send this to React to add new tab
+        if (bridge) {
+            bridge->sendOpenInNewTab(url.toString());
+        }
+    });
+
 
     QObject::connect(reactView, &QWebEngineView::loadFinished, [](bool ok) {
         if (ok)
@@ -91,11 +105,15 @@ int main(int argc, char *argv[]) {
             qDebug()<<"valid url of main.cpp :"<<qurl.toString();
         }
 
-        // // Set user agent for whatsapp-web but not work gemini-chatbot!
-        // contentView->page()->profile()->setHttpUserAgent(
-        //     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
-        //     "(KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36 Edg/119.0.0.0"
-        //     );
+        // if (qurl.scheme() == "https" && qurl.host() == "web.whatsapp.com"){
+        //     qDebug()<<"https://web.whatsapp.com/ detected so, set user agent";
+
+        //     // Set user agent for whatsapp-web but not work gemini-chatbot!
+        //     contentView->page()->profile()->setHttpUserAgent(
+        //         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+        //         "(KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36 Edg/119.0.0.0"
+        //         );
+        // }
 
         // // Enable all necessary features
         // QWebEngineSettings* settings = contentView->page()->settings();
@@ -120,7 +138,7 @@ int main(int argc, char *argv[]) {
                     height: rect.height
                 };
             })()
-        )", [=](const QVariant &result) {                                             
+        )", [=](const QVariant &result) {
                                              if (!result.isValid()){
                                                  qDebug() << "Failed to get slot position from React of main.cpp. so return";
                                                  return;
@@ -144,4 +162,6 @@ int main(int argc, char *argv[]) {
 
     return app.exec();
 }
+
+
 

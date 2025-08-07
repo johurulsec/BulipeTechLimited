@@ -77,4 +77,11 @@ void Bridge::reload() {
         contentView->reload();
 }
 
+void Bridge::sendOpenInNewTab(const QString &url)
+{
+    qDebug()<<"sendOpenInNewTab() of url:"<<url;
+
+    emit openInNewTab(url);
+}
+
 

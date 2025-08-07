@@ -68,6 +68,18 @@ export default function BasicTabs() {
               );
             });
           }
+
+          if (window.bridge.openInNewTab) {
+            window.bridge.openInNewTab.connect((url) => {
+              console.log("New tab request received from Qt:", url);
+
+              setTabs((prevTabs) => {
+                const newTabs = [...prevTabs, { url, label: url }];
+                setValue(newTabs.length - 1); // switch to new tab
+                return newTabs;
+              });
+            });
+          }
         });
       } else {
         setTimeout(waitForQt, 10);
