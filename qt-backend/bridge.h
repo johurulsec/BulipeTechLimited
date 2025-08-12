@@ -1,55 +1,55 @@
-//bridge.h
-#ifndef BRIDGE_H
-#define BRIDGE_H
+
+// bridge.h
+#pragma once
 
 #include <QObject>
-#include <QString>
-#include <QDebug>
-#include <QMessageBox>
-
 #include <QWebEngineView>
-#include<QWebEngineHistory>
 
 class Bridge : public QObject {
     Q_OBJECT
 public:
     explicit Bridge(QObject *parent = nullptr);
 
-    void setContentView(QWebEngineView* view);
+    Q_INVOKABLE void createTab(int tabId);
+    Q_INVOKABLE void closeTab(int tabId);
+    Q_INVOKABLE void setCurrentTab(int tabId);
+    Q_INVOKABLE void loadUrl(const QString &url);
+    Q_INVOKABLE void goBack();
+    Q_INVOKABLE void goForward();
+    Q_INVOKABLE void reload();
+
+    // helper to send new tab events from C++ to React
+    void sendOpenInNewTab(const QUrl &url);
+
 
 public slots:
     void log(const QString &message);
-    void showAlert(const QString &message);
     void closeWindow();
-
     void minimizeWindow();
-    void maximizeWindow();
-    void receiveFromReact(const QString &param1, const QString &param2);
-    void loadUrl(const QString &url);
-    void goBack();
-    void goForward();
-    void reload();
-
-    void sendOpenInNewTab(const QString& url);
+    void maximizeWindow();    
 
 signals:
-    void notify(const QString &message);
+    // Event emitted to React when C++ says a new tab should open
+    void openInNewTab(const QString &url);
+
+    // Routing signals that MainWindow will handle
+    void requestCreateTab(int tabId);
+    void requestCloseTab(int tabId);
+    void requestSetCurrentTab(int tabId);
+    void requestLoadUrlForTab(int tabId, const QString &url);
+    void requestGoBackForTab(int tabId);
+    void requestGoForwardForTab(int tabId);
+    void requestReloadForTab(int tabId);
+
     void requestClose();
 
     void requestMinimize();
     void requestMaximize();
-    void requestLocalStorage();
-    void requestLoadUrl(const QString &url);
-    void updateTitle(const QString &title);
-
-    void openInNewTab(const QString& url);
+    void updateTabUrl(int tabId, const QString &url);
 
 private:
-    QWebEngineView* contentView = nullptr;
-
+    int m_currentTabId = -1;
 };
-
-#endif // BRIDGE_H
 
 
 

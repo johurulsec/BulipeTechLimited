@@ -3,6 +3,91 @@
 #include <QWidget>
 #include <QWebEngineView>
 #include <QWebChannel>
+#include <QScreen>
+#include <QDebug>
+
+#include "bridge.h"
+#include "mainwindow.h"
+
+int main(int argc, char *argv[]) {
+    QApplication app(argc, argv);
+
+    qDebug() << "main.cpp start ...";
+
+    MainWindow mainWindow;
+
+    QScreen* screen = QGuiApplication::primaryScreen();
+    QRect screenGeometry = screen->availableGeometry();
+    mainWindow.resize(screenGeometry.width(), screenGeometry.height());
+    mainWindow.move(screenGeometry.topLeft());
+
+    // React UI WebEngineView
+    QWebEngineView* reactView = new QWebEngineView(&mainWindow);
+    reactView->resize(mainWindow.size());
+    reactView->show();
+
+    mainWindow.setReactView(reactView);
+
+    // QWebChannel setup
+    QWebChannel* channel = new QWebChannel();
+    Bridge* bridge = new Bridge();
+
+    channel->registerObject(QStringLiteral("bridge"), bridge);
+    reactView->page()->setWebChannel(channel);
+
+    // Connect Bridge routing signals to MainWindow slots
+    QObject::connect(bridge, &Bridge::requestCreateTab, &mainWindow, &MainWindow::createTab);
+    QObject::connect(bridge, &Bridge::requestCloseTab, &mainWindow, &MainWindow::closeTab);
+    QObject::connect(bridge, &Bridge::requestSetCurrentTab, &mainWindow, &MainWindow::setCurrentTab);
+    QObject::connect(bridge, &Bridge::requestLoadUrlForTab, &mainWindow, &MainWindow::loadUrlForTab);
+    QObject::connect(bridge, &Bridge::requestGoBackForTab, &mainWindow, &MainWindow::goBackForTab);
+    QObject::connect(bridge, &Bridge::requestGoForwardForTab, &mainWindow, &MainWindow::goForwardForTab);
+    QObject::connect(bridge, &Bridge::requestReloadForTab, &mainWindow, &MainWindow::reloadForTab);
+
+    // Forward new-tab requests coming from C++ pages to React via Bridge
+    QObject::connect(&mainWindow, &MainWindow::newTabRequested, bridge, &Bridge::sendOpenInNewTab);
+
+    //for back/forward button press and tabBar url change
+    QObject::connect(&mainWindow, &MainWindow::urlChangedForTab, bridge, &Bridge::updateTabUrl);
+
+    // Load React app
+    reactView->setUrl(QUrl("http://localhost:5173/"));
+
+    // Create initial tab 0 and set current
+    bridge->createTab(0);
+    bridge->setCurrentTab(0);
+
+    QObject::connect(bridge, &Bridge::requestMinimize, [&mainWindow]() {
+        qDebug()<<"mainWindow.showMinimized() of main()";
+        mainWindow.showMinimized();
+    });
+
+    QObject::connect(bridge, &Bridge::requestMaximize, [&mainWindow]() {
+        if (mainWindow.isMaximized()){
+            qDebug()<<"isMaximized() showNormal() of main()";
+            mainWindow.showNormal();
+        }
+        else{
+            qDebug()<<"isNormal() showMaximized of main()";
+            mainWindow.showMaximized();
+        }
+    });
+
+    QObject::connect(bridge, &Bridge::requestClose, [&mainWindow]() {
+        qDebug()<<"mainWindow.close() of main()";
+        mainWindow.close();
+    });
+
+    mainWindow.show();
+    return app.exec();
+}
+
+/*
+//main.cpp
+#include <QApplication>
+#include <QWidget>
+#include <QWebEngineView>
+#include <QWebChannel>
 #include <QVBoxLayout>
 #include "bridge.h"
 #include <QScreen>
@@ -162,6 +247,5 @@ int main(int argc, char *argv[]) {
 
     return app.exec();
 }
-
-
+*/
 

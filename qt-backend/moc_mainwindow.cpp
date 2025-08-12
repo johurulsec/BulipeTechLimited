@@ -38,10 +38,58 @@ template <> constexpr inline auto MainWindow::qt_create_metaobjectdata<qt_meta_t
 {
     namespace QMC = QtMocConstants;
     QtMocHelpers::StringRefStorage qt_stringData {
-        "MainWindow"
+        "MainWindow",
+        "newTabRequested",
+        "",
+        "url",
+        "urlChangedForTab",
+        "tabId",
+        "createTab",
+        "closeTab",
+        "setCurrentTab",
+        "loadUrlForTab",
+        "goBackForTab",
+        "goForwardForTab",
+        "reloadForTab"
     };
 
     QtMocHelpers::UintData qt_methods {
+        // Signal 'newTabRequested'
+        QtMocHelpers::SignalData<void(const QUrl &)>(1, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { QMetaType::QUrl, 3 },
+        }}),
+        // Signal 'urlChangedForTab'
+        QtMocHelpers::SignalData<void(int, const QString &)>(4, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { QMetaType::Int, 5 }, { QMetaType::QString, 3 },
+        }}),
+        // Slot 'createTab'
+        QtMocHelpers::SlotData<void(int)>(6, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { QMetaType::Int, 5 },
+        }}),
+        // Slot 'closeTab'
+        QtMocHelpers::SlotData<void(int)>(7, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { QMetaType::Int, 5 },
+        }}),
+        // Slot 'setCurrentTab'
+        QtMocHelpers::SlotData<void(int)>(8, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { QMetaType::Int, 5 },
+        }}),
+        // Slot 'loadUrlForTab'
+        QtMocHelpers::SlotData<void(int, const QString &)>(9, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { QMetaType::Int, 5 }, { QMetaType::QString, 3 },
+        }}),
+        // Slot 'goBackForTab'
+        QtMocHelpers::SlotData<void(int)>(10, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { QMetaType::Int, 5 },
+        }}),
+        // Slot 'goForwardForTab'
+        QtMocHelpers::SlotData<void(int)>(11, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { QMetaType::Int, 5 },
+        }}),
+        // Slot 'reloadForTab'
+        QtMocHelpers::SlotData<void(int)>(12, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { QMetaType::Int, 5 },
+        }}),
     };
     QtMocHelpers::UintData qt_properties {
     };
@@ -63,10 +111,26 @@ Q_CONSTINIT const QMetaObject MainWindow::staticMetaObject = { {
 void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     auto *_t = static_cast<MainWindow *>(_o);
-    (void)_t;
-    (void)_c;
-    (void)_id;
-    (void)_a;
+    if (_c == QMetaObject::InvokeMetaMethod) {
+        switch (_id) {
+        case 0: _t->newTabRequested((*reinterpret_cast< std::add_pointer_t<QUrl>>(_a[1]))); break;
+        case 1: _t->urlChangedForTab((*reinterpret_cast< std::add_pointer_t<int>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[2]))); break;
+        case 2: _t->createTab((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
+        case 3: _t->closeTab((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
+        case 4: _t->setCurrentTab((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
+        case 5: _t->loadUrlForTab((*reinterpret_cast< std::add_pointer_t<int>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[2]))); break;
+        case 6: _t->goBackForTab((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
+        case 7: _t->goForwardForTab((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
+        case 8: _t->reloadForTab((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
+        default: ;
+        }
+    }
+    if (_c == QMetaObject::IndexOfMethod) {
+        if (QtMocHelpers::indexOfMethod<void (MainWindow::*)(const QUrl & )>(_a, &MainWindow::newTabRequested, 0))
+            return;
+        if (QtMocHelpers::indexOfMethod<void (MainWindow::*)(int , const QString & )>(_a, &MainWindow::urlChangedForTab, 1))
+            return;
+    }
 }
 
 const QMetaObject *MainWindow::metaObject() const
@@ -85,6 +149,30 @@ void *MainWindow::qt_metacast(const char *_clname)
 int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
     _id = QWidget::qt_metacall(_c, _id, _a);
+    if (_id < 0)
+        return _id;
+    if (_c == QMetaObject::InvokeMetaMethod) {
+        if (_id < 9)
+            qt_static_metacall(this, _c, _id, _a);
+        _id -= 9;
+    }
+    if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
+        if (_id < 9)
+            *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
+        _id -= 9;
+    }
     return _id;
+}
+
+// SIGNAL 0
+void MainWindow::newTabRequested(const QUrl & _t1)
+{
+    QMetaObject::activate<void>(this, &staticMetaObject, 0, nullptr, _t1);
+}
+
+// SIGNAL 1
+void MainWindow::urlChangedForTab(int _t1, const QString & _t2)
+{
+    QMetaObject::activate<void>(this, &staticMetaObject, 1, nullptr, _t1, _t2);
 }
 QT_WARNING_POP
